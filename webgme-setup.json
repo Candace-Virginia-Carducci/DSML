@@ -1,23 +1,14 @@
 {
   "components": {
     "plugins": {
-      "FSMCodeGenerator": {
-        "src": "src/plugins/FSMCodeGenerator",
-        "test": "test/plugins/FSMCodeGenerator"
-      },
-      "FSMImporter": {
-        "src": "src/plugins/FSMImporter",
-        "test": "test/plugins/FSMImporter"
+      "FSMExample": {
+        "src": "src/plugins/FSMExample",
+        "test": "test/plugins/FSMExample"
       }
     },
     "seeds": {
       "FiniteStateMachine": {
         "src": "src/seeds/FiniteStateMachine"
-      }
-    },
-    "decorators": {
-      "UMLStateMachineDecorator": {
-        "src": "src/decorators/UMLStateMachineDecorator"
       }
     }
   },
