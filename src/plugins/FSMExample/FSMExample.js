@@ -60,13 +60,24 @@ define([
             nodeObject;
 
         nodeObject = self.activeNode;
+         self.loadNodes(self.rootNode) // TODO: Implement loadNodes.
+             .then(function (nodes) {
 
-        // self.loadNodes(self.rootNode) // TODO: Implement loadNodes.
-        //     .then(function (nodes) {
-
-        FSM.initialize(self.core, null, self.META);
+        FSM.initialize(self.core, nodes, self.META);
 
         // TODO: Implement check that nodeObject is UMLStateMachine
+        //THIS: this is being weird
+        var path = self.core.getPath(nodeObject);
+        console.log('PATH:', path);     //saying ''
+        var metaType = self.getMetaType(nodeObject);
+        console.log('MetaType:',metaType); //saying null
+        // if (self.core.getPath(nodeObject) === '' ||
+        //     self.core.getAttribute(self.getMetaType(nodeObject), 'name') !== 'UMLStateMachine'){
+        //     //throw an error
+        // } // else{
+                 //now everything goes in here
+        //       }
+
 
         var stateMachine = new FSM.UMLStateDiagram(nodeObject);
 
@@ -89,12 +100,26 @@ define([
         initState.attributes.startValue();
 
         self.result.setSuccess(true);
-        callback(null, self.result);
-        // })
-        // .catch(function (err) {
-        //     // Result success is false at invocation.
-        //     callback(err, self.result);
-        // });
+         callback(null, self.result);
+        })
+        .catch(function (err) {
+            // Result success is false at invocation.
+            callback(err, self.result);
+        });
+    };
+
+    //load Nodes
+    FSMExample.prototype.loadNodes = function (node){
+        var self = this;
+        return self.core.loadSubTree(node)
+            .then( function (nodeArr)  {
+                var nodes = {},
+                    i;
+                for(i=0; i<nodeArr.length; i +=1){
+                    nodes[self.core.getPath(nodeArr[i])] = nodeArr[i];
+                }
+                return nodes;
+            });
     };
 
     return FSMExample;
