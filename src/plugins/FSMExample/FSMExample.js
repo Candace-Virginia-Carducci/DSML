@@ -60,62 +60,61 @@ define([
             nodeObject;
 
         nodeObject = self.activeNode;
-         self.loadNodes(self.rootNode) // TODO: Implement loadNodes.
-             .then(function (nodes) {
+        self.loadNodes(self.rootNode)
+            .then(function (nodes) {
 
-        FSM.initialize(self.core, nodes, self.META);
+                FSM.initialize(self.core, nodes, self.META);
 
-        // TODO: Implement check that nodeObject is UMLStateMachine
-        //THIS: this is being weird
-        var path = self.core.getPath(nodeObject);
-        console.log('PATH:', path);     //saying ''
-        var metaType = self.getMetaType(nodeObject);
-        console.log('MetaType:',metaType); //saying null
-        // if (self.core.getPath(nodeObject) === '' ||
-        //     self.core.getAttribute(self.getMetaType(nodeObject), 'name') !== 'UMLStateMachine'){
-        //     //throw an error
-        // } // else{
-                 //now everything goes in here
-        //       }
+                // TODO: Implement check that nodeObject is UMLStateMachine
+                //THIS: this is being weird
+                var path = self.core.getPath(nodeObject);
+                console.log('PATH:', path);     //saying ''
+                var metaType = self.getMetaType(nodeObject);
+                //console.log('MetaType:', metaType); //saying null
+                if (self.core.getPath(nodeObject) === '' ||
+                    self.core.getAttribute(self.getMetaType(nodeObject), 'name') !== 'UMLStateDiagram'){
+                    throw new Error('Wrong type');
+                }
 
 
-        var stateMachine = new FSM.UMLStateDiagram(nodeObject);
+                var stateMachine = new FSM.UMLStateDiagram(nodeObject);
 
-        console.log(stateMachine.attributes.name());
-        console.log(stateMachine.getID());
+                console.log(stateMachine.attributes.name());
+                console.log(stateMachine.getID());
 
-        var stateBase = stateMachine.createStateBase();
-        console.log(stateBase.attributes);
+                var stateBase = stateMachine.createStateBase();
+                console.log(stateBase.attributes);
 
-        console.log(stateBase.attributes.name());
-        console.log(stateBase.attributes.delay());
+                console.log(stateBase.attributes.name());
+                console.log(stateBase.attributes.delay());
 
-        var state = stateMachine.createState();
+                var state = stateMachine.createState();
 
-        console.log(state.attributes.name());
-        console.log(state.attributes.delay());
+                console.log(state.attributes.name());
+                console.log(state.attributes.delay());
 
-        var initState = stateMachine.createInitial();
+                var initState = stateMachine.createInitial();
 
-        initState.attributes.startValue();
+                initState.attributes.startValue();
 
-        self.result.setSuccess(true);
-         callback(null, self.result);
-        })
-        .catch(function (err) {
-            // Result success is false at invocation.
-            callback(err, self.result);
-        });
+                self.result.setSuccess(true);
+                callback(null, self.result);
+            })
+            .catch(function (err) {
+                self.logger.error(err.stack);
+                // Result success is false at invocation.
+                callback(err, self.result);
+            });
     };
 
     //load Nodes
-    FSMExample.prototype.loadNodes = function (node){
+    FSMExample.prototype.loadNodes = function (node) {
         var self = this;
         return self.core.loadSubTree(node)
-            .then( function (nodeArr)  {
+            .then(function (nodeArr) {
                 var nodes = {},
                     i;
-                for(i=0; i<nodeArr.length; i +=1){
+                for (i = 0; i < nodeArr.length; i += 1) {
                     nodes[self.core.getPath(nodeArr[i])] = nodeArr[i];
                 }
                 return nodes;
