@@ -57,15 +57,15 @@ define([
         // These are all instantiated at this point.
         var self = this,
             nodeObject;
-        
-        // Using the coreAPI to make changes.
+
 
         nodeObject = self.activeNode;
+
         var metaNodeInfoJson,
            // metaMap = new Object();
             metaMap = {};
 
-        //attribute
+        //attributes
         var name = null,
             path = null,
             relid = null,
@@ -74,9 +74,9 @@ define([
         for(var metaNode in self.META){
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
+            name = metaNode;
 
-            self.getMetaInfo(metaNode);
-
+            metaNodeInfoJson =  self.getMetaInfo(metaNode);
 
             metaMap[metaNode] =  {name : name, path : path, relid : relid, guid : guid};
         }
@@ -100,10 +100,12 @@ define([
 
     };
     
-    DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
-        var self = this;
+    DSMLApiGenerator.prototype.getMetaInfo = function (metaNode) {
+        var self = this,
+            metaObj;
 
-        //var obj = self.core.getJsonMeta(meta);
+        metaObj =  self.core.getMetaJson(metaNode);
+
         return null;
     }
 
