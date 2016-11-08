@@ -74,13 +74,17 @@ define([
         for(var metaNode in self.META){
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
-            name = metaNode;
+            //name = metaNode;
             metaNodeInfoJson =  self.getMetaInfo(metaNode);
+
+            var str = JSON.stringify(metaNodeInfoJson);
+            self.logger.info(str);
+
             metaMap[metaNode] =  {name : name, path : path, relid : relid, guid : guid};
         }
 
         //print map
-        self.printMap(metaMap);
+        //self.printMap(metaMap);
 
         // This will save the changes. If you don't want to save;
         // exclude self.save and call callback directly from this scope.
@@ -101,9 +105,9 @@ define([
     DSMLApiGenerator.prototype.getMetaInfo = function (metaNode) {
         var self = this,
             metaObj;
-        
+
         //error: self.core.getMetaJson() is not a function
-        //metaObj =  self.core.getMetaJson(metaNode);
+        metaObj =  self.core.getJsonMeta(self.META[metaNode]);
 
         return metaObj;
     }
