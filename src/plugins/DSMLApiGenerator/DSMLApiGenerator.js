@@ -75,9 +75,7 @@ define([
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
             name = metaNode;
-
             metaNodeInfoJson =  self.getMetaInfo(metaNode);
-
             metaMap[metaNode] =  {name : name, path : path, relid : relid, guid : guid};
         }
 
@@ -103,10 +101,11 @@ define([
     DSMLApiGenerator.prototype.getMetaInfo = function (metaNode) {
         var self = this,
             metaObj;
+        
+        //error: self.core.getMetaJson() is not a function
+        //metaObj =  self.core.getMetaJson(metaNode);
 
-        metaObj =  self.core.getMetaJson(metaNode);
-
-        return null;
+        return metaObj;
     }
 
 
