@@ -65,12 +65,20 @@ define([
            // metaMap = new Object();
             metaMap = {};
 
+        //attribute
+        var name = null,
+            path = null,
+            relid = null,
+            guid = null;
+
         for(var metaNode in self.META){
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
-            //metaNodeInfoJson = self.getMetaInfo(metaNode);
-            metaMap[metaNode] =  null;
-            //call getMetaInfo on metaNode in self.META
+
+            self.getMetaInfo(metaNode);
+
+
+            metaMap[metaNode] =  {name : name, path : path, relid : relid, guid : guid};
         }
 
         //print map
@@ -94,6 +102,8 @@ define([
     
     DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
         var self = this;
+
+        //var obj = self.core.getJsonMeta(meta);
         return null;
     }
 
