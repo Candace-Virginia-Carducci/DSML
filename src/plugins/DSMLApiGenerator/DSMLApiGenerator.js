@@ -66,25 +66,48 @@ define([
             metaMap = {};
 
         //attributes
-        var name = null,
-            path = null,
-            relid = null,
-            guid = null;
+        var name,
+            path,
+            relid,
+            guid,
+            children,
+            attr,
+            pointers;
 
         for(var metaNode in self.META){
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
-            //name = metaNode;
-            metaNodeInfoJson =  self.getMetaInfo(metaNode);
+            path = self.core.getPath(self.META[metaNode]);
+            relid = self.core.getRelid(self.META[metaNode]);
+            guid = self.core.getGuid(self.META[metaNode]);
+            metaNodeInfoJson =  self.getMetaInfo(self.META[metaNode]);
 
-            var str = JSON.stringify(metaNodeInfoJson);
-            self.logger.info(str);
+            /**
+            * in obj there are:
+             * children
+             * minItems
+             * maxItems
+             * attributes
+             * pointers
+             * aspects
+             * constraints
+            **/
 
-            metaMap[metaNode] =  {name : name, path : path, relid : relid, guid : guid};
+            //name =  metaNodeInfoJson["attributes"].name;
+            attr = metaNodeInfoJson["attributes"];
+            children = metaNodeInfoJson["children"].items;
+            pointers = metaNodeInfoJson["pointers"];
+            // var attr = metaNodeInfoJson["attributes"];
+            // var attrStr = JSON.stringify(attr);
+            // self.logger.info("attributes: ", attrStr);
+
+            //self.logger.info(JSON.stringify(metaNodeInfoJson))
+
+            metaMap[metaNode] =  {attr : attr, path : path, relid : relid, guid : guid, children : children, pointers : pointers};
         }
 
         //print map
-        //self.printMap(metaMap);
+        self.printMap(metaMap);
 
         // This will save the changes. If you don't want to save;
         // exclude self.save and call callback directly from this scope.
@@ -102,12 +125,11 @@ define([
 
     };
     
-    DSMLApiGenerator.prototype.getMetaInfo = function (metaNode) {
+    DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
         var self = this,
             metaObj;
 
-        //error: self.core.getMetaJson() is not a function
-        metaObj =  self.core.getJsonMeta(self.META[metaNode]);
+        metaObj =  self.core.getJsonMeta(meta);
 
         return metaObj;
     }
