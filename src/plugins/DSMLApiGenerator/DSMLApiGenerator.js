@@ -11,10 +11,9 @@ define([
     'plugin/PluginConfig',
     'text!./metadata.json',
     'plugin/PluginBase'
-], function (
-    PluginConfig,
-    pluginMetadata,
-    PluginBase) {
+], function (PluginConfig,
+             pluginMetadata,
+             PluginBase) {
     'use strict';
 
     pluginMetadata = JSON.parse(pluginMetadata);
@@ -62,7 +61,7 @@ define([
         nodeObject = self.activeNode;
 
         var metaNodeInfoJson,
-           // metaMap = new Object();
+            // metaMap = new Object();
             metaMap = {};
 
         //attributes
@@ -74,16 +73,16 @@ define([
             attr,
             pointers;
 
-        for(var metaNode in self.META){
+        for (var metaNode in self.META) {
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
             path = self.core.getPath(self.META[metaNode]);
             relid = self.core.getRelid(self.META[metaNode]);
             guid = self.core.getGuid(self.META[metaNode]);
-            metaNodeInfoJson =  self.getMetaInfo(self.META[metaNode]);
+            metaNodeInfoJson = self.getMetaInfo(self.META[metaNode]);
 
             /**
-            * in obj there are:
+             * in obj there are:
              * children
              * minItems
              * maxItems
@@ -91,19 +90,22 @@ define([
              * pointers
              * aspects
              * constraints
-            **/
+             **/
 
-            //name =  metaNodeInfoJson["attributes"].name;
             attr = metaNodeInfoJson["attributes"];
             children = metaNodeInfoJson["children"].items;
             pointers = metaNodeInfoJson["pointers"];
-            // var attr = metaNodeInfoJson["attributes"];
-            // var attrStr = JSON.stringify(attr);
-            // self.logger.info("attributes: ", attrStr);
 
             //self.logger.info(JSON.stringify(metaNodeInfoJson))
 
-            metaMap[metaNode] =  {attr : attr, path : path, relid : relid, guid : guid, children : children, pointers : pointers};
+            metaMap[metaNode] = {
+                attr: attr,
+                path: path,
+                relid: relid,
+                guid: guid,
+                children: children,
+                pointers: pointers
+            };
         }
 
         //print map
@@ -124,20 +126,20 @@ define([
             });
 
     };
-    
+
     DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
         var self = this,
             metaObj;
 
-        metaObj =  self.core.getJsonMeta(meta);
+        metaObj = self.core.getJsonMeta(meta);
 
         return metaObj;
     }
 
 
     /**
-    * prints map of metaNodes
-    **/
+     * prints map of metaNodes
+     **/
     DSMLApiGenerator.prototype.printMap = function (metaMap) {
         var self = this,
             mapStr = JSON.stringify(metaMap, null, 2);
