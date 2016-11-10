@@ -63,6 +63,8 @@ define([
         var self = this,
             nodeObject;
 
+        // PM: It is good practise to define all variables at the top in javascript.
+        // Keep in mind there is no block scope in javascript only function scope.
 
         nodeObject = self.activeNode;
 
@@ -79,9 +81,12 @@ define([
             attr,
             pointers;
 
+        // PM: metaNode is a badly chosen variable name - metaName is better..
         for (var metaNode in self.META) {
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
+
+            // PM: All this business can go inside getMetaInfo
             path = self.core.getPath(self.META[metaNode]);
             relid = self.core.getRelid(self.META[metaNode]);
             guid = self.core.getGuid(self.META[metaNode]);
@@ -104,6 +109,7 @@ define([
 
             //self.logger.info(JSON.stringify(metaNodeInfoJson))
 
+            // PM: And add it directly here.
             metaMap[metaNode] = {
                 attr: attr,
                 path: path,
@@ -119,6 +125,8 @@ define([
         self.printMap(metaMap);
 
         var templates = self.getFiles(metaMap);
+        self.printMap(templates);
+
         var artifact = self.blobClient.createArtifact('dsmlAPI');
 
         artifact.addFiles(templates)
@@ -162,6 +170,8 @@ define([
         var templates = {},
             metaName;
 
+        // N.B. The second arugment to render is an object. Inside the template code all keys
+        // are available as variables in the scope of the template.
         templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, {});
         templates['DSML/API.js'] = ejs.render(PROJECT_TEMPLATE, {names: Object.keys(metaNodeInfo)});
 
