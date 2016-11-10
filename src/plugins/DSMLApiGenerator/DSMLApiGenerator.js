@@ -8,12 +8,18 @@
  */
 
 define([
-    'plugin/PluginConfig',
+    'common/util/ejs',
+    'plugin/PluginBase',
     'text!./metadata.json',
-    'plugin/PluginBase'
-], function (PluginConfig,
+    'text!./_project.ejs',
+    'text!./DSML.ejs',
+    'text!./MetaType.ejs'
+], function (ejs,
+             PluginBase,
              pluginMetadata,
-             PluginBase) {
+             PROJECT_TEMPLATE,
+             DSML_TEMPLATE,
+             META_TYPE_TEMPLATE) {
     'use strict';
 
     pluginMetadata = JSON.parse(pluginMetadata);
@@ -104,17 +110,23 @@ define([
                 relid: relid,
                 guid: guid,
                 children: children,
-                pointers: pointers
+                pointers: pointers,
+                name: metaNode
             };
         }
 
         //print map
         self.printMap(metaMap);
 
-        // This will save the changes. If you don't want to save;
-        // exclude self.save and call callback directly from this scope.
-        self.save('DSMLApiGenerator updated model.')
+        var templates = self.getFiles(metaMap);
+        var artifact = self.blobClient.createArtifact('dsmlAPI');
+
+        artifact.addFiles(templates)
             .then(function () {
+                return artifact.save();
+            })
+            .then(function (artifactHash) {
+                self.result.addArtifact(artifactHash);
                 self.result.setSuccess(true);
                 callback(null, self.result);
             })
@@ -122,7 +134,6 @@ define([
                 self.logger.error(err.stack);
                 // Result success is false at invocation.
                 callback(err, self.result);
-
             });
 
     };
@@ -134,7 +145,7 @@ define([
         metaObj = self.core.getJsonMeta(meta);
 
         return metaObj;
-    }
+    };
 
 
     /**
@@ -147,6 +158,19 @@ define([
         self.logger.info(mapStr);
     };
 
+    DSMLApiGenerator.prototype.getFiles = function (metaNodeInfo) {
+        var templates = {},
+            metaName;
+
+        templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, {});
+        templates['DSML/API.js'] = ejs.render(PROJECT_TEMPLATE, {names: Object.keys(metaNodeInfo)});
+
+        for (metaName in metaNodeInfo) {
+            templates['DSML/Types/' + metaName + '.Dsml.js'] = ejs.render(META_TYPE_TEMPLATE, metaNodeInfo[metaName]);
+        }
+
+        return templates;
+    };
 
     return DSMLApiGenerator;
 });
