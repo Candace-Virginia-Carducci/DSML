@@ -61,36 +61,30 @@ define([
         // Use self to access core, project, result, logger etc from PluginBase.
         // These are all instantiated at this point.
         var self = this,
-            nodeObject;
+            nodeObject,
+            metaNodeInfoJson, // object containing metaInfo
+            metaMap = {},   //constructed metaMap
+            children,
+            attr,
+            pointers;
+
 
         // PM: It is good practise to define all variables at the top in javascript.
         // Keep in mind there is no block scope in javascript only function scope.
 
         nodeObject = self.activeNode;
 
-        var metaNodeInfoJson,
-            // metaMap = new Object();
-            metaMap = {};
-
-        //attributes
-        var name,
-            path,
-            relid,
-            guid,
-            children,
-            attr,
-            pointers;
-
         // PM: metaNode is a badly chosen variable name - metaName is better..
-        for (var metaNode in self.META) {
+        for (var metaName in self.META) {
+
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
 
             // PM: All this business can go inside getMetaInfo
-            path = self.core.getPath(self.META[metaNode]);
-            relid = self.core.getRelid(self.META[metaNode]);
-            guid = self.core.getGuid(self.META[metaNode]);
-            metaNodeInfoJson = self.getMetaInfo(self.META[metaNode]);
+            //path = self.core.getPath(self.META[metaName]);
+            //relid = self.core.getRelid(self.META[metaName]);
+            //guid = self.core.getGuid(self.META[metaName]);
+            metaNodeInfoJson = self.getMetaInfo(self.META[metaName]);
 
             /**
              * in obj there are:
@@ -110,14 +104,14 @@ define([
             //self.logger.info(JSON.stringify(metaNodeInfoJson))
 
             // PM: And add it directly here.
-            metaMap[metaNode] = {
+            metaMap[metaName] = {
+                name: metaName,
                 attr: attr,
-                path: path,
-                relid: relid,
-                guid: guid,
+                path: metaNodeInfoJson["location"].path,
+                relid: metaNodeInfoJson["location"].relid,
+                guid: metaNodeInfoJson["location"].guid,
                 children: children,
                 pointers: pointers,
-                name: metaNode
             };
         }
 
@@ -146,12 +140,17 @@ define([
 
     };
 
-    DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
+    DSMLApiGenerator.prototype.getMetaInfo = function (metaName) {
         var self = this,
-            metaObj;
+            metaObj,
+            location = {};
 
-        metaObj = self.core.getJsonMeta(meta);
-
+        metaObj = self.core.getJsonMeta(metaName);
+        metaObj.location = {
+            path: self.core.getPath(metaName),
+            relid: self.core.getRelid(metaName),
+            guid: self.core.getGuid(metaName)
+        };
         return metaObj;
     };
 
