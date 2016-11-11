@@ -140,16 +140,16 @@ define([
 
     };
 
-    DSMLApiGenerator.prototype.getMetaInfo = function (metaName) {
+    DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
         var self = this,
             metaObj,
             location = {};
 
-        metaObj = self.core.getJsonMeta(metaName);
+        metaObj = self.core.getJsonMeta(meta);
         metaObj.location = {
-            path: self.core.getPath(metaName),
-            relid: self.core.getRelid(metaName),
-            guid: self.core.getGuid(metaName)
+            path: self.core.getPath(meta),
+            relid: self.core.getRelid(meta),
+            guid: self.core.getGuid(meta)
         };
         return metaObj;
     };
