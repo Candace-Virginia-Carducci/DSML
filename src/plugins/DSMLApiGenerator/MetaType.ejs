@@ -2,11 +2,11 @@
  * Some description..
  */
 
-// TODO: If there is a base we need to include it here..
-define(['./_project'], function (Project) {
+// TODO: If there is a base we need to include it here.. !
+define(['./_project' if(base){'plugin/project/DSML/project.base.DSML'}], function (Project if(base){ base }) {
     'use strict';
 
-//TODO: Replace all FCO with actual name.
+//TODO: Replace all FCO with actual name. !
 
     /**
      * Initializes a new instance of <%=name%>.
@@ -19,80 +19,80 @@ define(['./_project'], function (Project) {
      */
     Project.<%=name%> = function (node) {
         this._node = node;
-        this.attributes = new Project.FCO.Attributes(this._node);
+        this.attributes = new Project.<%=name%>.Attributes(this._node);
     };
 
     /**
-     * Initializes a new instance of FCO.Attributes
+     * Initializes a new instance of <%=name%>.Attributes
      *
      * @class
-     * @classdesc This class wraps the attributes of FCO.
-     * @param {object} node - The wrapped CoreNode object of FCO.
+     * @classdesc This class wraps the attributes of <%=name%>.
+     * @param {object} node - The wrapped CoreNode object of <%=name%>.
      * @constructor
      */
-    Project.FCO.Attributes = function (node) {
+    Project.<%=name%>.Attributes = function (node) {
         this._node = node;
     };
 
     /**
-     * WebGME node object that represents FCO type.
+     * WebGME node object that represents <%=name%> type.
      * @type {Object}
      * @static
      */
-    Project.FCO.Type = null; // Populated at Project.initialize
+    Project.<%=name%>.Type = null; // Populated at Project.initialize
 
     /**
-     * WebGME node object's meta type ID of FCO.
+     * WebGME node object's meta type ID of <%=name%>.
      * @type {string}
      * @static
      */
-    Project.FCO.ID = "/1";
+    Project.<%=name%>.ID = self.getID();
 
     /**
-     * WebGME node object's meta type GUID of FCO.
+     * WebGME node object's meta type GUID of <%=name%>.
      * @type {string}
      * @static
      */
-    Project.FCO.GUID = "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045";
+    Project.<%=name%>.GUID = self.getGUID();
 
     /**
-     * Creates a new FCO inside given parent.
-     * @returns {Project.FCO} The newly created FCO.
-     * @param {Project.FCO} parent Instance where the new FCO should be created.
+     * Creates a new <%=name%> inside given parent.
+     * @returns {Project.<%=name%>} The newly created <%=name%>.
+     * @param {Project.<%=name%>} parent Instance where the new <%=name%> should be created.
      * @public
      */
-    Project.FCO.createObj = function (parent) {
-        var node = Project._core.createNode({parent: parent._node, base: Project.FCO.Type});
-        return new Project.FCO(node);
+    Project.<%=name%>.createObj = function (parent) {
+        var node = Project._core.createNode({parent: parent._node, base: Project.<%=name%>.Type});
+        return new Project.<%=name%>(node);
     };
 
     /**
-     * Gets the ID of the FCO instance.
+     * Gets the ID of the <%=name%> instance.
      * @returns {string} The ID.
      * @public
      */
-    Project.FCO.prototype.getID = function () {
+    Project.<%=name%>.prototype.getID = function () {
         return Project._core.getPath(this._node);
     };
 
     /**
-     * Gets the GUID of the FCO instance.
+     * Gets the GUID of the <%=name%> instance.
      * @returns {string} The GUID.
      * @public
      */
-    Project.FCO.prototype.getGUID = function () {
+    Project.<%=name%>.prototype.getGUID = function () {
         return Project._core.getGuid(this._node);
     };
 
 <% for (var attrName in attr) {%>
     // TODO: use correct name and get type from attributes[attrName] etc.
     /**
-     * Gets or sets the attribute name of the FCO instance.
+     * Gets or sets the attribute name of the <%=name%> instance.
      * @param {string} [value] - If defined sets the attribute value to this
      * @returns {string} Currently set name.
      * @public
      */
-    Project.FCO.Attributes.prototype.<%=attrName%> = function (value) {
+    Project.<%=name%>.Attributes.prototype.<%=attrName%> = function (value) {
         if (typeof value !== 'undefined') {
             Project._core.setAttribute(this._node, 'name', value);
         }
@@ -100,5 +100,5 @@ define(['./_project'], function (Project) {
         return Project._core.getAttribute(this._node, 'name');
     };
 <%}%>
-    return Project.FCO;
+    return Project.<%=name%>;
 });
