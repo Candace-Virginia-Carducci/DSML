@@ -1,6 +1,10 @@
 define([
     './Types/_project',
-// TODO: Iterate over each meta-type and add e.g. './Types/FCO.Dsml'
+// TODO: Iterate over each meta-type and add e.g. './Types/FCO.Dsml' !
+<%for (var metaName in META){ %>
+    './Types/_project.<%- metaName%>.Dsml';
+%>
+<%}%>
 ], function (Project) {
 
     'use strict';
