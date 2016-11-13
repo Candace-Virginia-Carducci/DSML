@@ -2,8 +2,8 @@
  * Some description..
  */
 
-// TODO: If there is a base we need to include it here..
-define(['./_project' ], function (Project) {
+// TODO: If there is a base we need to include it here.. !
+define(['./_project', <%if(this.base){%>, './_project.<%- this.base%>.Dsml' <%}%> ], function (Project, <%if(this.base){%>, <%- this.base%> <%}%>) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
