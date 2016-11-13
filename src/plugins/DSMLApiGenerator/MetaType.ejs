@@ -85,7 +85,7 @@ define(['./_project'  './<%- name.Type%>.Dsml' ], function (Project <%=name%>) {
     };
 
 <% for (var attrName in attr) {%>
-    // TODO: use correct name and get type from attributes[attrName] etc.
+    // TODO: use correct name and get type from attributes[attrName]  !
     /**
      * Gets or sets the attribute name of the <%=name%> instance.
      * @param {string} [value] - If defined sets the attribute value to this
@@ -93,11 +93,11 @@ define(['./_project'  './<%- name.Type%>.Dsml' ], function (Project <%=name%>) {
      * @public
      */
     Project.<%=name%>.Attributes.prototype.<%=attrName%> = function (value) {
-        if (typeof value !== 'undefined') {
-            Project._core.setAttribute(this._node, 'name', value);
+        if (typeof value !== <%attr[attrName].type%>) {
+            Project._core.setAttribute(this._node, <%=attrName%>, value);
         }
 
-        return Project._core.getAttribute(this._node, 'name');
+        return Project._core.getAttribute(this._node, <%=attrName%>);
     };
 <%}%>
     return Project.<%=name%>;
