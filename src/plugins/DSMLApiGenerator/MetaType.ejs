@@ -3,7 +3,7 @@
  */
 
 // TODO: If there is a base we need to include it here..
-define(['./_project', <%if(this.base){%>, './_project.<%- this.base%>.Dsml' <%}%> ], function (Project, <%if(this.base){%>, <%- this.base%> <%}%>) {
+define(['./_project'  './<%- name.Type%>.Dsml' ], function (Project <%=name%>) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
@@ -46,14 +46,14 @@ define(['./_project', <%if(this.base){%>, './_project.<%- this.base%>.Dsml' <%}%
      * @type {string}
      * @static
      */
-    Project.<%=name%>.ID = self.getID();
+    Project.<%=name%>.ID = "/1";
 
     /**
      * WebGME node object's meta type GUID of <%=name%>.
      * @type {string}
      * @static
      */
-    Project.<%=name%>.GUID = self.getGUID();
+    Project.<%=name%>.GUID = "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045";
 
     /**
      * Creates a new <%=name%> inside given parent.
