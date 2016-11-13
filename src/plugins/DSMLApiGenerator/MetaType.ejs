@@ -93,7 +93,7 @@ define(['./_project'  './<%- name.Type%>.Dsml' ], function (Project <%=name%>) {
      * @public
      */
     Project.<%=name%>.Attributes.prototype.<%=attrName%> = function (value) {
-        if (typeof value !== <%attr[attrName].type%>) {
+        if (typeof value !== typeof <%=attrName%>) {
             Project._core.setAttribute(this._node, <%=attrName%>, value);
         }
 
