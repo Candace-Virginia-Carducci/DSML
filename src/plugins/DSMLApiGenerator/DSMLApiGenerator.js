@@ -75,8 +75,8 @@ define([
 
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
-
             metaMap[metaName] = self.getMetaInfo(self.META[metaName]);
+
         }
 
         //print map
@@ -107,7 +107,8 @@ define([
     DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
         var self = this,
             metaObj = {},
-            temp;
+            temp,
+            baseNode;
 
 
         /**
@@ -121,9 +122,12 @@ define([
          * constraints
          **/
 
+        baseNode = self.core.getBase(meta);
+
         temp = self.core.getJsonMeta(meta);
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
+            base: baseNode ? self.core.getAttribute(baseNode, 'name') :  "null",
             location: {
                 path: self.core.getPath(meta),
                 relid: self.core.getRelid(meta),
