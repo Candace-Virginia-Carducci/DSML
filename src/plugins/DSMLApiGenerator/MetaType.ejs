@@ -51,14 +51,14 @@ define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], functio
      * @type {string}
      * @static
      */
-    Project.<%=name%>.ID = "/1";
+    Project.<%=name%>.ID = "/<%=location.relid%>";
 
     /**
      * WebGME node object's meta type GUID of <%=name%>.
      * @type {string}
      * @static
      */
-    Project.<%=name%>.GUID = "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045";
+    Project.<%=name%>.GUID = "<%=location.guid%>";
 
     /**
      * Creates a new <%=name%> inside given parent.
