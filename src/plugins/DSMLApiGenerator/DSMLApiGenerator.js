@@ -62,11 +62,7 @@ define([
         // These are all instantiated at this point.
         var self = this,
             nodeObject,
-            metaNodeInfoJson, // object containing metaInfo
-            metaMap = {},   //constructed metaMap
-            children,
-            attr,
-            pointers;
+            metaMap = {};   //constructed metaMap
 
 
         // PM: It is good practise to define all variables at the top in javascript.
@@ -80,39 +76,7 @@ define([
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
 
-            // PM: All this business can go inside getMetaInfo
-            //path = self.core.getPath(self.META[metaName]);
-            //relid = self.core.getRelid(self.META[metaName]);
-            //guid = self.core.getGuid(self.META[metaName]);
-            metaNodeInfoJson = self.getMetaInfo(self.META[metaName]);
-
-            /**
-             * in obj there are:
-             * children
-             * minItems
-             * maxItems
-             * attributes
-             * pointers
-             * aspects
-             * constraints
-             **/
-
-            attr = metaNodeInfoJson["attributes"];
-            children = metaNodeInfoJson["children"].items;
-            pointers = metaNodeInfoJson["pointers"];
-
-            //self.logger.info(JSON.stringify(metaNodeInfoJson))
-
-            // PM: And add it directly here.
-            metaMap[metaName] = {
-                name: metaName,
-                attr: attr,
-                path: metaNodeInfoJson["location"].path,
-                relid: metaNodeInfoJson["location"].relid,
-                guid: metaNodeInfoJson["location"].guid,
-                children: children,
-                pointers: pointers,
-            };
+            metaMap[metaName] = self.getMetaInfo(self.META[metaName]);
         }
 
         //print map
@@ -142,15 +106,34 @@ define([
 
     DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
         var self = this,
-            metaObj,
-            location = {};
+            metaObj = {},
+            temp;
 
-        metaObj = self.core.getJsonMeta(meta);
-        metaObj.location = {
-            path: self.core.getPath(meta),
-            relid: self.core.getRelid(meta),
-            guid: self.core.getGuid(meta)
+
+        /**
+         * in obj there are:
+         * children
+         * minItems
+         * maxItems
+         * attributes
+         * pointers
+         * aspects
+         * constraints
+         **/
+
+        temp = self.core.getJsonMeta(meta);
+        metaObj = {
+            name: self.core.getAttribute(meta, 'name'),
+            location: {
+                path: self.core.getPath(meta),
+                relid: self.core.getRelid(meta),
+                guid: self.core.getGuid(meta)
+            },
+            attr: temp["attributes"],
+            children: temp["children"].items,
+            pointers: temp["pointers"]
         };
+
         return metaObj;
     };
 
