@@ -18,6 +18,7 @@ define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], functio
      * @constructor
      */
     Project.<%=name%> = function (node) {
+        <%=base%>.call(this,node);
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
     };
@@ -31,8 +32,12 @@ define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], functio
      * @constructor
      */
     Project.<%=name%>.Attributes = function (node) {
+        <%=base%>.Attributes.call(this,node);
         this._node = node;
     };
+
+
+
 
     /**
      * WebGME node object that represents <%=name%> type.
