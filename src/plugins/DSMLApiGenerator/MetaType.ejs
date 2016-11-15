@@ -3,7 +3,7 @@
  */
 
 // TODO: If there is a base we need to include it here..
-define(['./_project'], function (Project) {
+define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], function (Project, <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
