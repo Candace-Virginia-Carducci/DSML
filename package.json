@@ -10,6 +10,7 @@
     "url": "http://github.com/webgme/webgme-fsm.git"
   },
   "dependencies": {
+    "rimraf": "^2.5.4"
   },
   "peerDependencies": {
     "webgme": "2.x"

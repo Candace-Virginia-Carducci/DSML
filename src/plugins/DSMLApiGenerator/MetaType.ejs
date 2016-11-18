@@ -3,7 +3,7 @@
  */
 
 // TODO: If there is a base we need to include it here..
-define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], function (Project, <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>) {
+define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Project<%if( base ){%>, <%=base%><%}%>) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
@@ -18,7 +18,7 @@ define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], functio
      * @constructor
      */
     Project.<%=name%> = function (node) {
-        <%=base%>.call(this,node);
+        <%if (base) { %> <%=base%>.call(this,node);<%}%>
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
     };
@@ -32,12 +32,17 @@ define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], functio
      * @constructor
      */
     Project.<%=name%>.Attributes = function (node) {
-        <%=base%>.Attributes.call(this,node);
+        <%if (base) { %><%=base%>.Attributes.call(this,node);<%}%>
         this._node = node;
     };
 
+<%if (base) { %>
+    Project.<%=name%>.prototype = Object.create(<%=base%>.prototype);
+    Project.<%=name%>.prototype.constructor = Project.<%=name%>;
 
-
+    Project.<%=name%>.Attributes.prototype = Object.create(<%=base%>.Attributes.prototype);
+    Project.<%=name%>.Attributes.prototype.constructor = Project.<%=name%>.Attributes;
+<%}%>
 
     /**
      * WebGME node object that represents <%=name%> type.
@@ -90,10 +95,9 @@ define(['./_project', <%if( base !== 'null'){%> '<%=base%>.Dsml' <%}%>], functio
     };
 
 <% for (var attrName in attr) {%>
-    // TODO: use correct name and get type from attributes[attrName]  !
     /**
      * Gets or sets the attribute name of the <%=name%> instance.
-     * @param {string} [value] - If defined sets the attribute value to this
+     * @param {<%=attr[attrName].type%>} [value] - If defined sets the attribute value to this
      * @returns {string} Currently set name.
      * @public
      */

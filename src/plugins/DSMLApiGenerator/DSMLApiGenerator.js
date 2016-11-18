@@ -8,19 +8,24 @@
  */
 
 define([
+    'q',
     'common/util/ejs',
     'plugin/PluginBase',
     'text!./metadata.json',
     'text!./_project.ejs',
     'text!./DSML.ejs',
     'text!./MetaType.ejs'
-], function (ejs,
+], function (Q,
+             ejs,
              PluginBase,
              pluginMetadata,
              PROJECT_TEMPLATE,
              DSML_TEMPLATE,
              META_TYPE_TEMPLATE) {
     'use strict';
+
+    var DEBUG_OUTPUT_DIR = './src/plugins/DSMLTester/',
+        IS_DEBUG = typeof window === 'undefined' && process.env.WRITE_FILES;
 
     pluginMetadata = JSON.parse(pluginMetadata);
 
@@ -83,13 +88,13 @@ define([
         self.printMap(metaMap);
 
         var templates = self.getFiles(metaMap);
-        self.printMap(templates);
+        //self.printMap(templates);
 
-        var artifact = self.blobClient.createArtifact('dsmlAPI');
+        self.artifact = self.blobClient.createArtifact('dsmlAPI');
 
-        artifact.addFiles(templates)
+        self.saveFiles(templates)
             .then(function () {
-                return artifact.save();
+                return self.artifact.save();
             })
             .then(function (artifactHash) {
                 self.result.addArtifact(artifactHash);
@@ -101,7 +106,6 @@ define([
                 // Result success is false at invocation.
                 callback(err, self.result);
             });
-
     };
 
     DSMLApiGenerator.prototype.getMetaInfo = function (meta) {
@@ -127,15 +131,15 @@ define([
         temp = self.core.getJsonMeta(meta);
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
-            base: baseNode ? self.core.getAttribute(baseNode, 'name') :  "null",
+            base: baseNode ? self.core.getAttribute(baseNode, 'name') :  null,
             location: {
                 path: self.core.getPath(meta),
                 relid: self.core.getRelid(meta),
                 guid: self.core.getGuid(meta)
             },
-            attr: temp["attributes"],
-            children: temp["children"].items,
-            pointers: temp["pointers"]
+            attr: temp.attributes,
+            children: temp.children.items,
+            pointers: temp.pointers
         };
 
         return metaObj;
@@ -159,13 +163,56 @@ define([
         // N.B. The second arugment to render is an object. Inside the template code all keys
         // are available as variables in the scope of the template.
         templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, {});
-        templates['DSML/API.js'] = ejs.render(PROJECT_TEMPLATE, {names: Object.keys(metaNodeInfo)});
+        templates['DSML/DSML.js'] = ejs.render(PROJECT_TEMPLATE, {names: Object.keys(metaNodeInfo)});
 
         for (metaName in metaNodeInfo) {
             templates['DSML/Types/' + metaName + '.Dsml.js'] = ejs.render(META_TYPE_TEMPLATE, metaNodeInfo[metaName]);
         }
 
         return templates;
+    };
+
+    DSMLApiGenerator.prototype.saveFiles = function (templates) {
+        var self = this,
+            fs,
+            rimraf;
+
+        if (IS_DEBUG) {
+            rimraf = require('rimraf');
+            fs = require('fs');
+            return Q.nfcall(rimraf, DEBUG_OUTPUT_DIR + 'DSML')
+                .then(function () {
+                    var promises = [];
+
+                    if (!fs.existsSync(DEBUG_OUTPUT_DIR + 'DSML')){
+                        fs.mkdirSync(DEBUG_OUTPUT_DIR + 'DSML');
+                    }
+
+                    if (!fs.existsSync(DEBUG_OUTPUT_DIR + 'DSML/Types')){
+                        fs.mkdirSync(DEBUG_OUTPUT_DIR + 'DSML/Types');
+                    }
+
+                    for (var fName in templates) {
+                        promises.push(self.saveFile(fName, templates[fName]));
+                    }
+
+                    return Q.all(promises);
+                });
+        } else {
+            return self.artifact.addFiles(templates);
+        }
+    };
+
+    DSMLApiGenerator.prototype.saveFile = function (fName, content) {
+        var self = this,
+            fs;
+
+        if (IS_DEBUG) {
+            fs = require('fs');
+            return Q.ninvoke(fs, 'writeFile', DEBUG_OUTPUT_DIR + fName, content);
+        } else {
+            return self.artifact.addFile(fName, content);
+        }
     };
 
     return DSMLApiGenerator;
