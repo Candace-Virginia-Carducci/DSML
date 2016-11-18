@@ -142,6 +142,11 @@ define([
             pointers: temp.pointers
         };
 
+        //TODO: Children should be an array objects with info about the META-nodes that can be contained.
+        // {name: <metaName>, isAbstract: <true/false>}
+        
+        //TODO: Convert integer and float to number (but keep info that it is an integer/float.
+
         return metaObj;
     };
 

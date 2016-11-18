@@ -110,5 +110,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
         return Project._core.getAttribute(this._node, '<%=attrName%>');
     };
 <%}%>
+
+// TODO: Add create children, see UMLStateDiagram.Dsml.js
     return Project.<%=name%>;
 });
