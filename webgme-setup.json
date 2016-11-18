@@ -9,6 +9,9 @@
     "seeds": {
       "FiniteStateMachine": {
         "src": "src/seeds/FiniteStateMachine"
+      },
+      "dsmlTest": {
+        "src": "src/seeds/dsmlTest"
       }
     }
   },
