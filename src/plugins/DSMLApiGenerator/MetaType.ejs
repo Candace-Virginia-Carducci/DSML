@@ -19,6 +19,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
      */
     Project.<%=name%> = function (node) {
         <%if (base) { %> <%=base%>.call(this,node);<%}%>
+        // TODO: Add check that core.getBaseType(node) is the correct one.
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
     };
@@ -102,11 +103,11 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
      * @public
      */
     Project.<%=name%>.Attributes.prototype.<%=attrName%> = function (value) {
-        if (typeof value !== typeof <%=attrName%>) {
-            Project._core.setAttribute(this._node, <%=attrName%>, value);
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, '<%=attrName%>', value);
         }
 
-        return Project._core.getAttribute(this._node, <%=attrName%>);
+        return Project._core.getAttribute(this._node, '<%=attrName%>');
     };
 <%}%>
     return Project.<%=name%>;

@@ -79,13 +79,19 @@ define([
         // exclude self.save and call callback directly from this scope.
         self.loadNodes(self.rootNode)
             .then(function (nodes) {
+                var dsmlNode;
                 DSML.initialize(self.core, nodes, self.META);
+                dsmlNode = new DSML.System(self.activeNode);
+
+                self.logger.info('isTop', dsmlNode.attributes.isTop());
+                self.logger.info('name', dsmlNode.attributes.name());
 
                 self.result.setSuccess(true);
                 callback(null, self.result);
             })
             .catch(function (err) {
                 // Result success is false at invocation.
+                self.logger.error(err.stack);
                 callback(err, self.result);
             });
 
