@@ -2,8 +2,8 @@
  * Some description..
  */
 
-// TODO: If there is a base we need to include it here..!
-define(['./_project' ], function (Project ) {
+// TODO: If there is a base we need to include it here.. !
+define(['./_project' ], function (Project) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
@@ -18,7 +18,11 @@ define(['./_project' ], function (Project ) {
      * @constructor
      */
     Project.FCO = function (node) {
-        null.call(this,node);
+        
+        // TODO: Add check that core.getBaseType(node) is the correct one.
+        if( Project._core.getBaseType(node) !== null ){
+            throw new TypeError("Wrong Type");
+        }
         this._node = node;
         this.attributes = new Project.FCO.Attributes(this._node);
     };
@@ -32,10 +36,9 @@ define(['./_project' ], function (Project ) {
      * @constructor
      */
     Project.FCO.Attributes = function (node) {
-        null.Attributes.call(this,node);
+        
         this._node = node;
     };
-
 
 
 
@@ -90,7 +93,6 @@ define(['./_project' ], function (Project ) {
     };
 
 
-    // TODO: use correct name and get type from attributes[attrName]  !
     /**
      * Gets or sets the attribute name of the FCO instance.
      * @param {string} [value] - If defined sets the attribute value to this
@@ -98,12 +100,18 @@ define(['./_project' ], function (Project ) {
      * @public
      */
     Project.FCO.Attributes.prototype.name = function (value) {
-        if (typeof value !== typeof name) {
-            Project._core.setAttribute(this._node, name, value);
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'name', value);
         }
 
-        return Project._core.getAttribute(this._node, name);
+        return Project._core.getAttribute(this._node, 'name');
     };
+
+
+// TODO: Add create children, see UMLStateDiagram.Dsml.js
+    Project.FCO.prototype.createChildren = function () {
+        return Project.FCO.createObj(this);
+    }
 
     return Project.FCO;
 });

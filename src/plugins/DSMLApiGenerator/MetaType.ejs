@@ -20,7 +20,9 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
     Project.<%=name%> = function (node) {
         <%if (base) { %> <%=base%>.call(this,node);<%}%>
         // TODO: Add check that core.getBaseType(node) is the correct one.
-
+        if( Project._core.getBaseType(node) !== <%=base%> ){
+            throw new TypeError("Wrong Type");
+        }
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
     };
@@ -113,6 +115,9 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 <%}%>
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
+    Project.<%=name%>.prototype.createChildren = function () {
+        return Project.<%=name%>.createObj(this);
+    }
 
     return Project.<%=name%>;
 });

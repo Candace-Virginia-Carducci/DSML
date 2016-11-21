@@ -1,17 +1,19 @@
 define([
     './Types/_project',
-    './Types/Documentation.Dsml',
-    './Types/End.Dsml',
-    './Types/FCO.Dsml',
-    './Types/Initial.Dsml',
-    './Types/Language.Dsml',
-    './Types/State.Dsml',
-    './Types/StateBase.Dsml',
-    './Types/Transition.Dsml',
-    './Types/UMLStateDiagram.Dsml'
-], function (Project) {
 
+    './Types/FCO.Dsml',
+
+    './Types/ComponentRef.Dsml',
+
+    './Types/Component.Dsml',
+
+    './Types/System.Dsml',
+
+    './Types/Connection.Dsml',
+ ],
+function (Project){
     'use strict';
+
 
     return Project;
 });
