@@ -85,7 +85,7 @@ define([
         }
 
         //print map
-        self.printMap(metaMap);
+        //self.printMap(metaMap);
 
         var templates = self.getFiles(metaMap);
         //self.printMap(templates);
@@ -112,7 +112,10 @@ define([
         var self = this,
             metaObj = {},
             temp,
-            baseNode;
+            baseNode,
+            num = 0,
+            numType,
+            childContainment = {};
 
 
         /**
@@ -129,6 +132,7 @@ define([
         baseNode = self.core.getBase(meta);
 
         temp = self.core.getJsonMeta(meta);
+
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
             base: baseNode ? self.core.getAttribute(baseNode, 'name') :  null,
@@ -142,10 +146,30 @@ define([
             pointers: temp.pointers
         };
 
-        //TODO: Children should be an array objects with info about the META-nodes that can be contained.
+        //TODO: Children should be an array objects with info about the META-nodes that can be contained. !
         // {name: <metaName>, isAbstract: <true/false>}
-        
-        //TODO: Convert integer and float to number (but keep info that it is an integer/float.
+       // self.logger.info(JSON.stringify(metaObj.children));
+
+        for (var i in metaObj.children){
+            //self.logger.info(self.core.getAttribute(meta, 'name'));
+            //self.logger.info(metaObj.children[i]);
+            childContainment = {
+                childName: self.core.getAttribute(meta, 'name'),
+                isAbstract: self.core.isAbstract(meta)
+            };
+        };
+
+        //self.logger.info(JSON.stringify(childContainment));
+
+
+
+        //TODO: Convert integer and float to number (but keep info that it is an integer/float. !
+        if (Math.floor(num) - num !== 0){
+            numType = "float";
+        } else {
+            numType = "integer";
+        }
+        num = new Number(num);
 
         return metaObj;
     };

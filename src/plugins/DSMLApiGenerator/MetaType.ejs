@@ -2,7 +2,7 @@
  * Some description..
  */
 
-// TODO: If there is a base we need to include it here..
+// TODO: If there is a base we need to include it here.. !
 define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Project<%if( base ){%>, <%=base%><%}%>) {
     'use strict';
 
@@ -20,6 +20,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
     Project.<%=name%> = function (node) {
         <%if (base) { %> <%=base%>.call(this,node);<%}%>
         // TODO: Add check that core.getBaseType(node) is the correct one.
+
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
     };
@@ -112,5 +113,6 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 <%}%>
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
+
     return Project.<%=name%>;
 });
