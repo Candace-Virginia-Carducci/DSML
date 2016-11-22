@@ -20,9 +20,11 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
     Project.<%=name%> = function (node) {
         <%if (base) { %> <%=base%>.call(this,node);<%}%>
         // TODO: Add check that core.getBaseType(node) is the correct one.
-        if( core.getBaseType(node) !== <%=base%> ){
+        <!--it keeps throwing the wrong type error here when testing ... but with <%%> around, it can't acceess the core-->
+        if( Project._core.getBaseType(node) !== '<%=base%>' ){
            throw new TypeError("Wrong Type");
-        }
+
+       }
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
     };

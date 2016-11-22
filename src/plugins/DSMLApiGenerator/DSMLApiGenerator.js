@@ -85,7 +85,7 @@ define([
         }
 
         //print map
-        //self.printMap(metaMap);
+        self.printMap(metaMap);
 
         var templates = self.getFiles(metaMap);
         //self.printMap(templates);
@@ -134,7 +134,7 @@ define([
 
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
-            base: baseNode ? self.core.getAttribute(baseNode, 'name') :  null,
+            base: baseNode ? self.core.getAttribute(baseNode, 'name') : null,
             location: {
                 path: self.core.getPath(meta),
                 relid: self.core.getRelid(meta),
@@ -147,9 +147,9 @@ define([
 
         //TODO: Children should be an array objects with info about the META-nodes that can be contained. !
         // {name: <metaName>, isAbstract: <true/false>}
-       // self.logger.info(JSON.stringify(metaObj.children));
+        // self.logger.info(JSON.stringify(metaObj.children));
         //self.core.getNode(id);
-        for (var i in metaObj.children){
+        for (var i in metaObj.children) {
             //self.logger.info(self.core.getAttribute(meta, 'name'));
             //self.logger.info(metaObj.children[i]);
             //childNode = {client API}. getNode(path);
@@ -158,19 +158,19 @@ define([
                 childName: self.core.getAttribute(meta, 'name'),
                 isAbstract: self.core.isAbstract(meta)
             };
-        };
+        }
+        ;
 
         //self.logger.info(JSON.stringify(childContainment));
 
 
-
         //TODO: Convert integer and float to number (but keep info that it is an integer/float. !
         //self.logger.info(JSON.stringify(metaObj.attr));
-        for (var x in metaObj.attr){
+        for (var x in metaObj.attr) {
             //self.logger.info(metaObj.attr[x].type);
 
-            if(metaObj.attr[x].type === "float" || metaObj.attr[x].type === "integer"){
-               metaObj.attr[x] = {type: "number" };
+            if (metaObj.attr[x].type === "float" || metaObj.attr[x].type === "integer") {
+                metaObj.attr[x] = {type: "number"};
             }
         }
 
@@ -216,11 +216,11 @@ define([
                 .then(function () {
                     var promises = [];
 
-                    if (!fs.existsSync(DEBUG_OUTPUT_DIR + 'DSML')){
+                    if (!fs.existsSync(DEBUG_OUTPUT_DIR + 'DSML')) {
                         fs.mkdirSync(DEBUG_OUTPUT_DIR + 'DSML');
                     }
 
-                    if (!fs.existsSync(DEBUG_OUTPUT_DIR + 'DSML/Types')){
+                    if (!fs.existsSync(DEBUG_OUTPUT_DIR + 'DSML/Types')) {
                         fs.mkdirSync(DEBUG_OUTPUT_DIR + 'DSML/Types');
                     }
 
