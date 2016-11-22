@@ -113,8 +113,7 @@ define([
             metaObj = {},
             temp,
             baseNode,
-            num = 0,
-            numType,
+            childNode,
             childContainment = {};
 
 
@@ -149,10 +148,12 @@ define([
         //TODO: Children should be an array objects with info about the META-nodes that can be contained. !
         // {name: <metaName>, isAbstract: <true/false>}
        // self.logger.info(JSON.stringify(metaObj.children));
-
+        //self.core.getNode(id);
         for (var i in metaObj.children){
             //self.logger.info(self.core.getAttribute(meta, 'name'));
             //self.logger.info(metaObj.children[i]);
+            //childNode = {client API}. getNode(path);
+
             childContainment = {
                 childName: self.core.getAttribute(meta, 'name'),
                 isAbstract: self.core.isAbstract(meta)
@@ -164,12 +165,14 @@ define([
 
 
         //TODO: Convert integer and float to number (but keep info that it is an integer/float. !
-        if (Math.floor(num) - num !== 0){
-            numType = "float";
-        } else {
-            numType = "integer";
+        //self.logger.info(JSON.stringify(metaObj.attr));
+        for (var x in metaObj.attr){
+            //self.logger.info(metaObj.attr[x].type);
+
+            if(metaObj.attr[x].type === "float" || metaObj.attr[x].type === "integer"){
+               metaObj.attr[x] = {type: "number" };
+            }
         }
-        num = new Number(num);
 
         return metaObj;
     };
