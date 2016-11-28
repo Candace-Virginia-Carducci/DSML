@@ -85,7 +85,7 @@ define([
         }
 
         //print map
-        self.printMap(metaMap);
+        //self.printMap(metaMap);
 
         var templates = self.getFiles(metaMap);
         //self.printMap(templates);
@@ -131,6 +131,7 @@ define([
         baseNode = self.core.getBase(meta);
 
         temp = self.core.getJsonMeta(meta);
+        self.logger.info(JSON.stringify(temp.children));
 
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),

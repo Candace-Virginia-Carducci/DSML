@@ -23,7 +23,7 @@ define(['./_project' ], function (Project) {
 
         //<!--Project._core.getBaseType(node).....keep getting null as base-->
         if( Project._core.getBase(node) !== null ){
-          // throw new TypeError("Wrong Type");
+           //throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.FCO.Attributes(this._node);
@@ -49,7 +49,7 @@ define(['./_project' ], function (Project) {
      * @type {Object}
      * @static
      */
-    Project.FCO.Type = null; // Populated at Project.initialize
+    Project.FCO.Type =  null; // Populated at Project.initialize
 
     /**
      * WebGME node object's meta type ID of FCO.

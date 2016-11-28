@@ -22,7 +22,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         // TODO: Add check that core.getBaseType(node) is the correct one.
 
         //<!--Project._core.getBaseType(node).....keep getting null as base-->
-        if( Project._core.getBase(node) !== "FCO" ){
+        if( Project._core.getBase(node) !== FCO ){
            throw new TypeError("Wrong Type");
         }
         this._node = node;
@@ -55,7 +55,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @type {Object}
      * @static
      */
-    Project.Connection.Type = "Connection"; // Populated at Project.initialize
+    Project.Connection.Type =  null; // Populated at Project.initialize
 
     /**
      * WebGME node object's meta type ID of Connection.

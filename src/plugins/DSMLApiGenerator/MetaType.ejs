@@ -22,7 +22,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
         // TODO: Add check that core.getBaseType(node) is the correct one.
 
         //<!--Project._core.getBaseType(node).....keep getting null as base-->
-        if( Project._core.getBase(node) !== "<%=base%>" ){
+        if( Project._core.getBase(node) !== <%=base%> ){
            throw new TypeError("Wrong Type");
         }
         this._node = node;
@@ -55,7 +55,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
      * @type {Object}
      * @static
      */
-    Project.<%=name%>.Type = "<%=name%>"; // Populated at Project.initialize
+    Project.<%=name%>.Type =  null; // Populated at Project.initialize
 
     /**
      * WebGME node object's meta type ID of <%=name%>.
@@ -115,6 +115,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
         return Project._core.getAttribute(this._node, '<%=attrName%>');
     };
 <%}%>
+
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
     Project.<%=name%>.prototype.createChildren = function () {

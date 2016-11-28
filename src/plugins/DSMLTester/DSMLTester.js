@@ -71,17 +71,19 @@ define([
 
         nodeObject = self.activeNode;
 
-        //self.core.setAttribute(nodeObject, 'name', 'My new obj');
-        //self.core.setRegistry(nodeObject, 'position', {x: 70, y: 70});
-
 
         // This will save the changes. If you don't want to save;
         // exclude self.save and call callback directly from this scope.
         self.loadNodes(self.rootNode)
             .then(function (nodes) {
                 var dsmlNode;
+
                 DSML.initialize(self.core, nodes, self.META);
-                dsmlNode = new DSML.System(self.activeNode);
+                dsmlNode = new DSML.System(nodeObject);//;self.activeNode);
+
+
+                self.logger.info('nodeObject', self.core.getAttribute(nodeObject, 'name'));
+                self.logger.info('activeNode', self.core.getAttribute(self.activeNode, 'name'));
 
                 //System
                 self.logger.info('name: ', dsmlNode.attributes.name());
@@ -92,13 +94,8 @@ define([
                 self.logger.info('scalability', dsmlNode.attributes.scalability())
                 self.logger.info('isTop', dsmlNode.attributes.isTop());
                 self.logger.info('isSafe', dsmlNode.attributes.isSafe());
-                var newNode = dsmlNode.createChildren();
+                //var newNode = dsmlNode.createChildren();
 
-                //Component
-                //dsmlNode =
-                //ComponentRef
-                // self.logger.info('name: ', dsmlNode.attributes.name());
-                //Connection
 
 
 
