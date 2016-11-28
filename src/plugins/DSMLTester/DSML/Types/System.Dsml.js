@@ -20,8 +20,10 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     Project.System = function (node) {
          FCO.call(this,node);
         // TODO: Add check that core.getBaseType(node) is the correct one.
-        if( Project._core.getBaseType(node) !== FCO ){
-            throw new TypeError("Wrong Type");
+
+        //<!--Project._core.getBaseType(node).....keep getting null as base-->
+        if( Project._core.getBase(node) !== "FCO" ){
+           //throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.System.Attributes(this._node);
@@ -76,7 +78,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @public
      */
     Project.System.createObj = function (parent) {
-        var node = Project._core.createNode({parent: parent._node, base: Project.System.Type});
+        var node = Project._core.createNode({parent: parent.node, base: Project.System.Type});
         return new Project.System(node);
     };
 
@@ -115,6 +117,48 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
     /**
      * Gets or sets the attribute name of the System instance.
+     * @param {number} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.System.Attributes.prototype.reliability = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'reliability', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'reliability');
+    };
+
+    /**
+     * Gets or sets the attribute name of the System instance.
+     * @param {number} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.System.Attributes.prototype.scalability = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'scalability', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'scalability');
+    };
+
+    /**
+     * Gets or sets the attribute name of the System instance.
+     * @param {boolean} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.System.Attributes.prototype.isSafe = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'isSafe', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'isSafe');
+    };
+
+    /**
+     * Gets or sets the attribute name of the System instance.
      * @param {boolean} [value] - If defined sets the attribute value to this
      * @returns {string} Currently set name.
      * @public
@@ -130,8 +174,9 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
     Project.System.prototype.createChildren = function () {
-        return Project.System.createObj(this);
+        return Project.System.createObj(this._node);
     }
+
 
     return Project.System;
 });

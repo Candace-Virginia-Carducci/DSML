@@ -83,8 +83,24 @@ define([
                 DSML.initialize(self.core, nodes, self.META);
                 dsmlNode = new DSML.System(self.activeNode);
 
+                //System
+                self.logger.info('name: ', dsmlNode.attributes.name());
+                self.logger.info('ID', dsmlNode.getID());
+                self.logger.info('GUID', dsmlNode.getGUID());
+                self.logger.info('Type', dsmlNode.Type);
+                self.logger.info('reliability', dsmlNode.attributes.reliability());
+                self.logger.info('scalability', dsmlNode.attributes.scalability())
                 self.logger.info('isTop', dsmlNode.attributes.isTop());
-                self.logger.info('name', dsmlNode.attributes.name());
+                self.logger.info('isSafe', dsmlNode.attributes.isSafe());
+                //var newNode = dsmlNode.createChildren();
+
+                //Component
+                //dsmlNode =
+                //ComponentRef
+                // self.logger.info('name: ', dsmlNode.attributes.name());
+                //Connection
+
+
 
                 self.result.setSuccess(true);
                 callback(null, self.result);

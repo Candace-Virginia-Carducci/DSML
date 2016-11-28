@@ -20,8 +20,10 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     Project.Connection = function (node) {
          FCO.call(this,node);
         // TODO: Add check that core.getBaseType(node) is the correct one.
-        if( Project._core.getBaseType(node) !== FCO ){
-            throw new TypeError("Wrong Type");
+
+        //<!--Project._core.getBaseType(node).....keep getting null as base-->
+        if( Project._core.getBase(node) !== "FCO" ){
+           throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.Connection.Attributes(this._node);
@@ -53,7 +55,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @type {Object}
      * @static
      */
-    Project.Connection.Type = null; // Populated at Project.initialize
+    Project.Connection.Type = "Connection"; // Populated at Project.initialize
 
     /**
      * WebGME node object's meta type ID of Connection.
@@ -76,7 +78,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @public
      */
     Project.Connection.createObj = function (parent) {
-        var node = Project._core.createNode({parent: parent._node, base: Project.Connection.Type});
+        var node = Project._core.createNode({parent: parent.node, base: Project.Connection.Type});
         return new Project.Connection(node);
     };
 
@@ -113,11 +115,40 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         return Project._core.getAttribute(this._node, 'name');
     };
 
+    /**
+     * Gets or sets the attribute name of the Connection instance.
+     * @param {number} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.Connection.Attributes.prototype.reliability = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'reliability', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'reliability');
+    };
+
+    /**
+     * Gets or sets the attribute name of the Connection instance.
+     * @param {boolean} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.Connection.Attributes.prototype.isSafe = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'isSafe', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'isSafe');
+    };
+
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
     Project.Connection.prototype.createChildren = function () {
-        return Project.Connection.createObj(this);
+        return Project.Connection.createObj(this._node);
     }
+
 
     return Project.Connection;
 });

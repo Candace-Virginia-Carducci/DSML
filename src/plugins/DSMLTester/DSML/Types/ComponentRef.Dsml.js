@@ -20,8 +20,10 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     Project.ComponentRef = function (node) {
          FCO.call(this,node);
         // TODO: Add check that core.getBaseType(node) is the correct one.
-        if( Project._core.getBaseType(node) !== FCO ){
-            throw new TypeError("Wrong Type");
+
+        //<!--Project._core.getBaseType(node).....keep getting null as base-->
+        if( Project._core.getBase(node) !== "FCO" ){
+           throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.ComponentRef.Attributes(this._node);
@@ -53,7 +55,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @type {Object}
      * @static
      */
-    Project.ComponentRef.Type = null; // Populated at Project.initialize
+    Project.ComponentRef.Type = "ComponentRef"; // Populated at Project.initialize
 
     /**
      * WebGME node object's meta type ID of ComponentRef.
@@ -76,7 +78,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @public
      */
     Project.ComponentRef.createObj = function (parent) {
-        var node = Project._core.createNode({parent: parent._node, base: Project.ComponentRef.Type});
+        var node = Project._core.createNode({parent: parent.node, base: Project.ComponentRef.Type});
         return new Project.ComponentRef(node);
     };
 
@@ -113,11 +115,40 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         return Project._core.getAttribute(this._node, 'name');
     };
 
+    /**
+     * Gets or sets the attribute name of the ComponentRef instance.
+     * @param {number} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.ComponentRef.Attributes.prototype.id = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'id', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'id');
+    };
+
+    /**
+     * Gets or sets the attribute name of the ComponentRef instance.
+     * @param {string} [value] - If defined sets the attribute value to this
+     * @returns {string} Currently set name.
+     * @public
+     */
+    Project.ComponentRef.Attributes.prototype.componentType = function (value) {
+        if (typeof value !== 'undefined') {
+            Project._core.setAttribute(this._node, 'componentType', value);
+        }
+
+        return Project._core.getAttribute(this._node, 'componentType');
+    };
+
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
     Project.ComponentRef.prototype.createChildren = function () {
-        return Project.ComponentRef.createObj(this);
+        return Project.ComponentRef.createObj(this._node);
     }
+
 
     return Project.ComponentRef;
 });

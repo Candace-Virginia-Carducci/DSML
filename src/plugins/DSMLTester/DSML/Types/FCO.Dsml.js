@@ -20,8 +20,10 @@ define(['./_project' ], function (Project) {
     Project.FCO = function (node) {
         
         // TODO: Add check that core.getBaseType(node) is the correct one.
-        if( Project._core.getBaseType(node) !== null ){
-            throw new TypeError("Wrong Type");
+
+        //<!--Project._core.getBaseType(node).....keep getting null as base-->
+        if( Project._core.getBase(node) !== null ){
+          // throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.FCO.Attributes(this._node);
@@ -70,7 +72,7 @@ define(['./_project' ], function (Project) {
      * @public
      */
     Project.FCO.createObj = function (parent) {
-        var node = Project._core.createNode({parent: parent._node, base: Project.FCO.Type});
+        var node = Project._core.createNode({parent: parent.node, base: Project.FCO.Type});
         return new Project.FCO(node);
     };
 
@@ -110,8 +112,9 @@ define(['./_project' ], function (Project) {
 
 // TODO: Add create children, see UMLStateDiagram.Dsml.js
     Project.FCO.prototype.createChildren = function () {
-        return Project.FCO.createObj(this);
+        return Project.FCO.createObj(this._node);
     }
+
 
     return Project.FCO;
 });
