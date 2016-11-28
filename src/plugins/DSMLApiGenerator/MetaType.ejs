@@ -7,6 +7,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
+//TODO: Add Children
 
     /**
      * Initializes a new instance of <%=name%>.
@@ -17,12 +18,12 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
      * @param {object} node - The wrapped CoreNode object.
      * @constructor
      */
-    Project.<%=name%> = function (node) {
-        <%if (base) { %> <%=base%>.call(this,node);<%}%>
+    Project.<%=name%> = function (node, skipTypeCheck) {
+        <%if (base) { %> <%=base%>.call(this, node, true);<%}%>
         // TODO: Add check that core.getBaseType(node) is the correct one.
 
         //<!--Project._core.getBaseType(node).....keep getting null as base-->
-        if( Project._core.getBase(node) !== <%=base%> ){
+        if(!skipTypeCheck && Project._core.getBaseType(node) !== Project.<%=name%>.Type){
            throw new TypeError("Wrong Type");
         }
         this._node = node;
@@ -100,6 +101,17 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
         return Project._core.getGuid(this._node);
     };
 
+// TODO: For each derived type add
+   /**
+    * Downcast emulation
+    * @returns {Project.METATYPE} The node as an Project.METATYPE.
+    * @public
+    */
+    Project.<%=name%>.prototype.asMETATYPE = function () {
+        // TODO: Consider adding a check for the base-type here.
+        return this;
+    };
+
 <% for (var attrName in attr) {%>
     /**
      * Gets or sets the attribute name of the <%=name%> instance.
@@ -117,10 +129,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 <%}%>
 
 
-// TODO: Add create children, see UMLStateDiagram.Dsml.js
-    Project.<%=name%>.prototype.createChildren = function () {
-        return Project.<%=name%>.createObj(this._node);
-    }
+// TODO: Children.prototype.METATYPE for each valid child type
 
 
     return Project.<%=name%>;

@@ -5,7 +5,7 @@ define([], function () {
     var Project = function () {
     };
 
-    Project.initialize = function (core, nodes, META) {
+    Project.initialize = function (core, nodes, META, rootNode) {
         var name;
         for (name in META) {
             if (Project.hasOwnProperty(name)) {
@@ -18,7 +18,29 @@ define([], function () {
 
         Project._core = core;
         Project._nodes = nodes;
+
+        // TODO: Create Project.ROOT and return with it
     };
+
+    //TODO: fill in similar to MetaType
+    Project.ROOT = function (node) {
+
+    }
+
+    Project.ROOT.Children = function (node) {
+        this._node = node;
+    };
+
+    // get id
+
+    // get guid
+
+    // For each meta-type add
+
+    Project.ROOT.Children.prototype.FCO = function () {
+        // TODO: get all children (core) nodes and match with Project.MetaType
+        // Filter out based on dsmlNode instanceof Project.FCO.
+    }
 
     return Project;
 });
