@@ -92,7 +92,7 @@ define([
                 self.logger.info('scalability', dsmlNode.attributes.scalability())
                 self.logger.info('isTop', dsmlNode.attributes.isTop());
                 self.logger.info('isSafe', dsmlNode.attributes.isSafe());
-                //var newNode = dsmlNode.createChildren();
+                var newNode = dsmlNode.createChildren();
 
                 //Component
                 //dsmlNode =
