@@ -20,9 +20,8 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
      */
     Project.<%=name%> = function (node, skipTypeCheck) {
         <%if (base) { %> <%=base%>.call(this, node, true);<%}%>
-        // TODO: Add check that core.getBaseType(node) is the correct one.
+        // TODO: Add check that core.getBaseType(node) is the correct one. !
 
-        //<!--Project._core.getBaseType(node).....keep getting null as base-->
         if(!skipTypeCheck && Project._core.getBaseType(node) !== Project.<%=name%>.Type){
            throw new TypeError("Wrong Type");
         }

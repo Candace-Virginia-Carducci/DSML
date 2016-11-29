@@ -7,6 +7,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
+//TODO: Add Children
 
     /**
      * Initializes a new instance of ComponentRef.
@@ -17,12 +18,11 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @param {object} node - The wrapped CoreNode object.
      * @constructor
      */
-    Project.ComponentRef = function (node) {
-         FCO.call(this,node);
-        // TODO: Add check that core.getBaseType(node) is the correct one.
+    Project.ComponentRef = function (node, skipTypeCheck) {
+         FCO.call(this, node, true);
+        // TODO: Add check that core.getBaseType(node) is the correct one. !
 
-        //<!--Project._core.getBaseType(node).....keep getting null as base-->
-        if( Project._core.getBase(node) !== FCO ){
+        if(!skipTypeCheck && Project._core.getBaseType(node) !== Project.ComponentRef.Type){
            throw new TypeError("Wrong Type");
         }
         this._node = node;
@@ -100,6 +100,17 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         return Project._core.getGuid(this._node);
     };
 
+// TODO: For each derived type add
+   /**
+    * Downcast emulation
+    * @returns {Project.METATYPE} The node as an Project.METATYPE.
+    * @public
+    */
+    Project.ComponentRef.prototype.asMETATYPE = function () {
+        // TODO: Consider adding a check for the base-type here.
+        return this;
+    };
+
 
     /**
      * Gets or sets the attribute name of the ComponentRef instance.
@@ -143,10 +154,9 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         return Project._core.getAttribute(this._node, 'componentType');
     };
 
-// TODO: Add create children, see UMLStateDiagram.Dsml.js
-    Project.ComponentRef.prototype.createChildren = function () {
-        return Project.ComponentRef.createObj(this._node);
-    }
+
+
+// TODO: Children.prototype.METATYPE for each valid child type
 
 
     return Project.ComponentRef;

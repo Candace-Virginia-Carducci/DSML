@@ -7,6 +7,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
+//TODO: Add Children
 
     /**
      * Initializes a new instance of System.
@@ -17,13 +18,12 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
      * @param {object} node - The wrapped CoreNode object.
      * @constructor
      */
-    Project.System = function (node) {
-         FCO.call(this,node);
-        // TODO: Add check that core.getBaseType(node) is the correct one.
+    Project.System = function (node, skipTypeCheck) {
+         FCO.call(this, node, true);
+        // TODO: Add check that core.getBaseType(node) is the correct one. !
 
-        //<!--Project._core.getBaseType(node).....keep getting null as base-->
-        if( Project._core.getBase(node) !== FCO ){
-           //throw new TypeError("Wrong Type");
+        if(!skipTypeCheck && Project._core.getBaseType(node) !== Project.System.Type){
+           throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.System.Attributes(this._node);
@@ -100,6 +100,17 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         return Project._core.getGuid(this._node);
     };
 
+// TODO: For each derived type add
+   /**
+    * Downcast emulation
+    * @returns {Project.METATYPE} The node as an Project.METATYPE.
+    * @public
+    */
+    Project.System.prototype.asMETATYPE = function () {
+        // TODO: Consider adding a check for the base-type here.
+        return this;
+    };
+
 
     /**
      * Gets or sets the attribute name of the System instance.
@@ -172,10 +183,8 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     };
 
 
-// TODO: Add create children, see UMLStateDiagram.Dsml.js
-    Project.System.prototype.createChildren = function () {
-        return Project.System.createObj(this._node);
-    }
+
+// TODO: Children.prototype.METATYPE for each valid child type
 
 
     return Project.System;

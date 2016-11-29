@@ -131,7 +131,6 @@ define([
         baseNode = self.core.getBase(meta);
 
         temp = self.core.getJsonMeta(meta);
-        self.logger.info(JSON.stringify(temp.children));
 
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
@@ -153,8 +152,6 @@ define([
         for (var i in metaObj.children) {
             //self.logger.info(self.core.getAttribute(meta, 'name'));
             //self.logger.info(metaObj.children[i]);
-            //childNode = {client API}. getNode(path);
-
             childContainment = {
                 childName: self.core.getAttribute(meta, 'name'),
                 isAbstract: self.core.isAbstract(meta)
@@ -169,7 +166,6 @@ define([
         //self.logger.info(JSON.stringify(metaObj.attr));
         for (var x in metaObj.attr) {
             //self.logger.info(metaObj.attr[x].type);
-
             if (metaObj.attr[x].type === "float" || metaObj.attr[x].type === "integer") {
                 metaObj.attr[x] = {type: "number"};
             }
@@ -190,12 +186,13 @@ define([
     };
 
     DSMLApiGenerator.prototype.getFiles = function (metaNodeInfo) {
-        var templates = {},
+        var self = this,
+            templates = {},
             metaName;
 
         // N.B. The second arugment to render is an object. Inside the template code all keys
         // are available as variables in the scope of the template.
-        templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, {});
+        templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, self.META);
         templates['DSML/DSML.js'] = ejs.render(DSML_TEMPLATE, {META: metaNodeInfo});
 
         for (metaName in metaNodeInfo) {

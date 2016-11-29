@@ -76,25 +76,29 @@ define([
         // exclude self.save and call callback directly from this scope.
         self.loadNodes(self.rootNode)
             .then(function (nodes) {
-                var dsmlNode;
+                var dsmlNode,
+                    rootObj;
 
-                DSML.initialize(self.core, nodes, self.META);
-                dsmlNode = new DSML.System(nodeObject);//;self.activeNode);
+                rootObj = DSML.initialize(self.core, nodes, self.META, self.rootNode);
+                dsmlNode = new DSML.System(self.activeNode);
 
+                self.logger.info(rootObj.childrenPaths);
 
-                self.logger.info('nodeObject', self.core.getAttribute(nodeObject, 'name'));
-                self.logger.info('activeNode', self.core.getAttribute(self.activeNode, 'name'));
+                self.logger.info();
+                //self.logger.info('ROOT', self.core.getOwnChildrenPaths(rootObj));
+
+                // self.logger.info('nodeObject', self.core.getAttribute(nodeObject, 'name'));
+                // self.logger.info('activeNode', self.core.getAttribute(self.activeNode, 'name'));
 
                 //System
-                self.logger.info('name: ', dsmlNode.attributes.name());
-                self.logger.info('ID', dsmlNode.getID());
-                self.logger.info('GUID', dsmlNode.getGUID());
-                self.logger.info('Type', dsmlNode.Type);
-                self.logger.info('reliability', dsmlNode.attributes.reliability());
-                self.logger.info('scalability', dsmlNode.attributes.scalability())
-                self.logger.info('isTop', dsmlNode.attributes.isTop());
-                self.logger.info('isSafe', dsmlNode.attributes.isSafe());
-                //var newNode = dsmlNode.createChildren();
+                // self.logger.info('name: ', dsmlNode.attributes.name());
+                // self.logger.info('ID', dsmlNode.getID());
+                // self.logger.info('GUID', dsmlNode.getGUID());
+                // self.logger.info('Type', self.core.getAttribute(self.core.getBase(self.activeNode), 'name'));
+                // self.logger.info('reliability', dsmlNode.attributes.reliability());
+                // self.logger.info('scalability', dsmlNode.attributes.scalability())
+                // self.logger.info('isTop', dsmlNode.attributes.isTop());
+                // self.logger.info('isSafe', dsmlNode.attributes.isSafe());
 
 
 

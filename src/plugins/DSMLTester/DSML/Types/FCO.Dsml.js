@@ -7,6 +7,7 @@ define(['./_project' ], function (Project) {
     'use strict';
 
 //TODO: Replace all FCO with actual name. !
+//TODO: Add Children
 
     /**
      * Initializes a new instance of FCO.
@@ -17,13 +18,12 @@ define(['./_project' ], function (Project) {
      * @param {object} node - The wrapped CoreNode object.
      * @constructor
      */
-    Project.FCO = function (node) {
+    Project.FCO = function (node, skipTypeCheck) {
         
-        // TODO: Add check that core.getBaseType(node) is the correct one.
+        // TODO: Add check that core.getBaseType(node) is the correct one. !
 
-        //<!--Project._core.getBaseType(node).....keep getting null as base-->
-        if( Project._core.getBase(node) !== null ){
-           //throw new TypeError("Wrong Type");
+        if(!skipTypeCheck && Project._core.getBaseType(node) !== Project.FCO.Type){
+           throw new TypeError("Wrong Type");
         }
         this._node = node;
         this.attributes = new Project.FCO.Attributes(this._node);
@@ -94,6 +94,17 @@ define(['./_project' ], function (Project) {
         return Project._core.getGuid(this._node);
     };
 
+// TODO: For each derived type add
+   /**
+    * Downcast emulation
+    * @returns {Project.METATYPE} The node as an Project.METATYPE.
+    * @public
+    */
+    Project.FCO.prototype.asMETATYPE = function () {
+        // TODO: Consider adding a check for the base-type here.
+        return this;
+    };
+
 
     /**
      * Gets or sets the attribute name of the FCO instance.
@@ -110,10 +121,8 @@ define(['./_project' ], function (Project) {
     };
 
 
-// TODO: Add create children, see UMLStateDiagram.Dsml.js
-    Project.FCO.prototype.createChildren = function () {
-        return Project.FCO.createObj(this._node);
-    }
+
+// TODO: Children.prototype.METATYPE for each valid child type
 
 
     return Project.FCO;
