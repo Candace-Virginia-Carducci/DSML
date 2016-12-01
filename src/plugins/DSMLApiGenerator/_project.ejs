@@ -36,10 +36,10 @@ define([], function () {
     */
     Project.ROOT = function (node, META) {
         var name,
-        childrenPaths;
+            childrenPaths;
 
-        childrenPaths = Project._core.getOwnChildrenPaths(node);
-        for (var i in childrenPaths) {
+        var children = Project._core.getOwnChildrenPaths(node);
+        for (var i in children) {
             for ( name in META) {
                 if(Project._core.getPath(META[name]) === childrenPaths[i]) {
                     childrenPaths[i] = name;
@@ -71,19 +71,15 @@ define([], function () {
     // For each meta-type add
     //JS DOC
     Project.ROOT.Children.prototype.FCO = function () {
-        // TODO: get all children (core) nodes and match with Project.MetaType
-        // Filter out based on dsmlNode instanceof Project.FCO.
+    // TODO: get all children (core) nodes and match with Project.MetaType
+    // Filter out based on dsmlNode instanceof Project.FCO.
 
-     }
-
-<%for(var metaType in this.META ) { %>
-    /**
-    * @public
-    */
-    Project.ROOT.Children.prototype.<%=metaType%> = function () {
     }
-<%}%>
 
+
+    Project.ROOT.Children.prototype.child = function () {
+        var hi;
+    }
 
     return Project;
 });

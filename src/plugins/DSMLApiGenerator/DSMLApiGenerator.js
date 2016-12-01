@@ -144,11 +144,12 @@ define([
             //self.logger.info(metaObj.children[i]);
             childContainment = {
                 childName: self.core.getAttribute(meta, 'name'),
-                path : temp.children.items[i],
+                childPath: temp.children.items[i],
                 isAbstract: self.core.isAbstract(meta)
             };
         };
 
+        //self.logger.info(JSON.stringify(childContainment));
 
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
@@ -159,16 +160,10 @@ define([
                 guid: self.core.getGuid(meta)
             },
             attr: temp.attributes,
-            children: temp.children.items,
+            children: childContainment,//temp.children.items,
             pointers: temp.pointers,
-            pathMap : self.getPathMap(self.META)
+            pathMap : self.getPathMap(self.META,childContainment)
         };
-
-        //self.logger.info(self)
-
-
-        //self.logger.info(JSON.stringify(metaObj.children));
-
 
 
         //TODO: Convert integer and float to number (but keep info that it is an integer/float. !
@@ -180,7 +175,7 @@ define([
             }
         }
 
-        //self.logger.info(JSON.stringify(metaObj.children.childName));
+
 
         return metaObj;
     };
@@ -196,18 +191,24 @@ define([
         self.logger.info(mapStr);
     };
 
-    DSMLApiGenerator.prototype.getPathMap = function (META){
+    DSMLApiGenerator.prototype.getPathMap = function (META, children) {
         var self = this,
-            pathMap = {},
-            childrenPaths;
+            pathMap = {};
 
-            for (var name in META) {
-                childrenPaths = self.core.getChildrenPaths(self.META[name]);
-                for(var i=0; i < childrenPaths.length; i+=1){
-                    pathMap[childrenPaths[i]] = self.META[name];
-                }
-            }
+        for (var metaName in META) {
+            var meta = META[metaName];
+            var name = self.core.getAttribute(meta, 'name');
+            var path = self.core.getPath(meta);
+            pathMap[path] = name;
+            //self.logger.info(path, pathMap[path], name);
+        };
 
+        self.logger.info(JSON.stringify(children));
+        for(var i in children){
+            self.logger.info(children[i].childPath);
+        }
+        //self.logger.info(JSON.stringify(childContainment.childName), JSON.stringify(childContainment.path));
+           // pathMap[childContainment.path] = childContainment.childName;
             return pathMap;
     };
 
