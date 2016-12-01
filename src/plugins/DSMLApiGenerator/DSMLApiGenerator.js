@@ -161,7 +161,7 @@ define([
             attr: temp.attributes,
             children: temp.children.items,
             pointers: temp.pointers,
-            //pathMap : self.getPathMap(self.META)
+            pathMap : self.getPathMap(self.META)
         };
 
         //self.logger.info(self)

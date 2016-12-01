@@ -130,13 +130,13 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 
 // TODO: Children.prototype.METATYPE for each valid child type
 <%for (var i = 0 ; i <children.length; i+=1) {
-    //var child = pathMap[children[i]];
+    var child = pathMap[children[i]];
 %>
     /**
     * @returns {string} Currently set name.
     * @public
     */
-    Project.<%=name%>.Children.prototype.<%=i%> = function () {
+    Project.<%=name%>.Children.prototype.<%=child%> = function () {
         var hi = 1;
     };
 
