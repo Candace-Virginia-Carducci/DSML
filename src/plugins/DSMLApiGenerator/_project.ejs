@@ -38,9 +38,6 @@ define([], function () {
         var name,
         childrenPaths;
 
-        if(Project._core.getAttribute(node, 'name') !== 'ROOT')
-            throw new ReferenceError("Not the Root Node");
-
         childrenPaths = Project._core.getOwnChildrenPaths(node);
         for (var i in childrenPaths) {
             for ( name in META) {
@@ -49,6 +46,7 @@ define([], function () {
                 }
             }
         }
+
         this.Children = new Project.ROOT.Children(node, META);
     };
 
@@ -60,13 +58,22 @@ define([], function () {
     * @param {object} node - The wrapped CoreNode object of Project.ROOT
     * @constructor
     */
-    Project.ROOT.Children = function (node) {
+    Project.ROOT.Children = function (node, META) {
+        var pathMap = {},
+        childrenPaths;
+
+        for (var name in META) {
+            childrenPaths = self.core.getChildrenPaths(self.META[name]);
+            for(var i=0; i < childrenPaths.length; i+=1){
+                pathMap[childrenPaths[i]] = self.META[name];
+            }
+        }
         this._node = node;
+        return pathMap;
     };
 
 
     // get id
-
 
 
     // get guid
@@ -76,8 +83,16 @@ define([], function () {
     Project.ROOT.Children.prototype.FCO = function () {
         // TODO: get all children (core) nodes and match with Project.MetaType
         // Filter out based on dsmlNode instanceof Project.FCO.
-    }
 
+     }
+
+<%for(var metaType in this.META ) { %>
+    /**
+    * @public
+    */
+    Project.ROOT.Children.prototype.<%=metaType%> = function () {
+    }
+<%}%>
 
 
     return Project;

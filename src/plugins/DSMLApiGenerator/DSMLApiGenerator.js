@@ -87,6 +87,7 @@ define([
         //print map
         //self.printMap(metaMap);
 
+
         var templates = self.getFiles(metaMap);
         //self.printMap(templates);
 
@@ -114,7 +115,8 @@ define([
             temp,
             baseNode,
             childNode,
-            childContainment = {};
+            childContainment = {},
+            mapByPath = {};
 
 
         /**
@@ -132,6 +134,22 @@ define([
 
         temp = self.core.getJsonMeta(meta);
 
+
+        //TODO: Children should be an array objects with info about the META-nodes that can be contained. !
+        // {name: <metaName>, isAbstract: <true/false>}
+        //self.logger.info(JSON.stringify(metaObj.children));
+        //self.core.getNode(id);
+        for (var i in temp.children.items) {
+            //self.logger.info(self.core.getAttribute(meta, 'name'));
+            //self.logger.info(metaObj.children[i]);
+            childContainment = {
+                childName: self.core.getAttribute(meta, 'name'),
+                path : temp.children.items[i],
+                isAbstract: self.core.isAbstract(meta)
+            };
+        };
+
+
         metaObj = {
             name: self.core.getAttribute(meta, 'name'),
             base: baseNode ? self.core.getAttribute(baseNode, 'name') : null,
@@ -142,24 +160,15 @@ define([
             },
             attr: temp.attributes,
             children: temp.children.items,
-            pointers: temp.pointers
+            pointers: temp.pointers,
+            //pathMap : self.getPathMap(self.META)
         };
 
-        //TODO: Children should be an array objects with info about the META-nodes that can be contained. !
-        // {name: <metaName>, isAbstract: <true/false>}
-        // self.logger.info(JSON.stringify(metaObj.children));
-        //self.core.getNode(id);
-        for (var i in metaObj.children) {
-            //self.logger.info(self.core.getAttribute(meta, 'name'));
-            //self.logger.info(metaObj.children[i]);
-            childContainment = {
-                childName: self.core.getAttribute(meta, 'name'),
-                isAbstract: self.core.isAbstract(meta)
-            };
-        }
-        ;
+        //self.logger.info(self)
 
-        //self.logger.info(JSON.stringify(childContainment));
+
+        //self.logger.info(JSON.stringify(metaObj.children));
+
 
 
         //TODO: Convert integer and float to number (but keep info that it is an integer/float. !
@@ -170,6 +179,8 @@ define([
                 metaObj.attr[x] = {type: "number"};
             }
         }
+
+        //self.logger.info(JSON.stringify(metaObj.children.childName));
 
         return metaObj;
     };
@@ -184,6 +195,22 @@ define([
 
         self.logger.info(mapStr);
     };
+
+    DSMLApiGenerator.prototype.getPathMap = function (META){
+        var self = this,
+            pathMap = {},
+            childrenPaths;
+
+            for (var name in META) {
+                childrenPaths = self.core.getChildrenPaths(self.META[name]);
+                for(var i=0; i < childrenPaths.length; i+=1){
+                    pathMap[childrenPaths[i]] = self.META[name];
+                }
+            }
+
+            return pathMap;
+    };
+
 
     DSMLApiGenerator.prototype.getFiles = function (metaNodeInfo) {
         var self = this,
