@@ -59,17 +59,7 @@ define([], function () {
     * @constructor
     */
     Project.ROOT.Children = function (node, META) {
-        var pathMap = {},
-        childrenPaths;
-
-        for (var name in META) {
-            childrenPaths = self.core.getChildrenPaths(self.META[name]);
-            for(var i=0; i < childrenPaths.length; i+=1){
-                pathMap[childrenPaths[i]] = self.META[name];
-            }
-        }
         this._node = node;
-        return pathMap;
     };
 
 
