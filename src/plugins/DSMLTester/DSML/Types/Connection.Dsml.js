@@ -107,7 +107,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     * @public
     */
     Project.Connection.prototype.asMETATYPE = function () {
-        // TODO: Consider adding a check for the base-type here.
+
         return this;
     };
 
@@ -158,6 +158,17 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 // TODO: Children.prototype.METATYPE for each valid child type
 
+
+    /**
+    * Gets the children of the Connection instance.
+    * @returns {''} Currently get children.
+    * @public
+    */
+    Project.Connection.prototype.getBambino = function () {
+        
+       
+        return [''];
+    };
 
     return Project.Connection;
 });

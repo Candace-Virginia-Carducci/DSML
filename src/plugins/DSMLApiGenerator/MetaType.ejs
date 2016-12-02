@@ -129,16 +129,36 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 
 
 // TODO: Children.prototype.METATYPE for each valid child type
-<%for (var i = 0; i < children.length; i += 1) {
-    var childName = pathMap[children[i]]; %>
-  <%  if(childName.isAbstract){
-        continue;
-    }
+<%for (var c = 0; c < children.length; c += 1) {
+    var bambinoName = pathMap[children[c]];
 %>
-    Project.<%=name%>.Children.prototype.<%=childName%> = function () {
+    <% if(children[c].isAbstract){
+       continue;
+   }%>
+    /**
+    * sets the children name of the <%=bambinoName%> instance.
+    * @returns {string} Currently set name.
+    * @public
+    */
+    Project.<%=name%>.Children.prototype.<%=bambinoName%> = function () {
         var hi = 1;
+    return '<%=bambinoName%>';
     };
 <%}%>
+
+    /**
+    * Gets the children of the <%=name%> instance.
+    * @returns {'<%=children%>'} Currently get children.
+    * @public
+    */
+    Project.<%=name%>.prototype.getBambino = function () {
+        <%var bambini = []; %>
+       <%for (var z = 0; z < children.length; z += 1) {
+           bambini.push(pathMap[children[z]]);
+       %>
+        <%}%>
+        return ['<%=bambini%>'];
+    };
 
     return Project.<%=name%>;
 });

@@ -107,7 +107,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     * @public
     */
     Project.System.prototype.asMETATYPE = function () {
-        // TODO: Consider adding a check for the base-type here.
+
         return this;
     };
 
@@ -186,6 +186,65 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 // TODO: Children.prototype.METATYPE for each valid child type
 
+    
+    /**
+    * sets the children name of the Component instance.
+    * @returns {string} Currently set name.
+    * @public
+    */
+    Project.System.Children.prototype.Component = function () {
+        var hi = 1;
+    return 'Component';
+    };
+
+    
+    /**
+    * sets the children name of the System instance.
+    * @returns {string} Currently set name.
+    * @public
+    */
+    Project.System.Children.prototype.System = function () {
+        var hi = 1;
+    return 'System';
+    };
+
+    
+    /**
+    * sets the children name of the Connection instance.
+    * @returns {string} Currently set name.
+    * @public
+    */
+    Project.System.Children.prototype.Connection = function () {
+        var hi = 1;
+    return 'Connection';
+    };
+
+    
+    /**
+    * sets the children name of the ComponentRef instance.
+    * @returns {string} Currently set name.
+    * @public
+    */
+    Project.System.Children.prototype.ComponentRef = function () {
+        var hi = 1;
+    return 'ComponentRef';
+    };
+
+
+    /**
+    * Gets the children of the System instance.
+    * @returns {'/W,/j,/C,/X'} Currently get children.
+    * @public
+    */
+    Project.System.prototype.getBambino = function () {
+        
+       
+        
+        
+        
+        
+        return ['Component,System,Connection,ComponentRef'];
+    };
 
     return Project.System;
 });

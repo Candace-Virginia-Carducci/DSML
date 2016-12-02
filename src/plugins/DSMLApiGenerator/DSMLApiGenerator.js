@@ -81,11 +81,11 @@ define([
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
             metaMap[metaName] = self.getMetaInfo(self.META[metaName]);
-
+           // self.logger.info(JSON.stringify(metaName));
         }
 
         //print map
-        //self.printMap(metaMap);
+        self.printMap(metaMap);
 
 
         var templates = self.getFiles(metaMap);
@@ -116,7 +116,7 @@ define([
             baseNode,
             childNode,
             childContainment = {},
-            mapByPath = {};
+            pathMap = {};
 
 
         /**
@@ -137,16 +137,17 @@ define([
 
         //TODO: Children should be an array objects with info about the META-nodes that can be contained. !
         // {name: <metaName>, isAbstract: <true/false>}
-        //self.logger.info(JSON.stringify(metaObj.children));
-        //self.core.getNode(id);
-        for (var i in temp.children.items) {
-            //self.logger.info(self.core.getAttribute(meta, 'name'));
-            //self.logger.info(metaObj.children[i]);
-            childContainment = {
+        //self.logger.info(temp.children.items);
+        var n = 0;
+        for (var v=0; v < temp.children.items.length; v +=1) {
+            childContainment[v]  = {
                 childName: self.core.getAttribute(meta, 'name'),
-                childPath: temp.children.items[i],
+                childPath: temp.children.items[v],
                 isAbstract: self.core.isAbstract(meta)
             };
+            n = n + 1;
+            pathMap[temp.children.items[v]] = self.core.getAttribute(meta, 'name');
+
         };
 
         //self.logger.info(JSON.stringify(childContainment));
@@ -160,7 +161,8 @@ define([
                 guid: self.core.getGuid(meta)
             },
             attr: temp.attributes,
-            children: childContainment,//temp.children.items,
+            children: temp.children.items, // childContainment, //
+            numChildren: n,
             pointers: temp.pointers,
             pathMap : self.getPathMap(self.META,childContainment)
         };
@@ -176,6 +178,7 @@ define([
         }
 
 
+        //self.getPathMap(self.META,childContainment);
 
         return metaObj;
     };
@@ -191,7 +194,7 @@ define([
         self.logger.info(mapStr);
     };
 
-    DSMLApiGenerator.prototype.getPathMap = function (META, children) {
+    DSMLApiGenerator.prototype.getPathMap = function (META, childContainment) {
         var self = this,
             pathMap = {};
 
@@ -203,12 +206,9 @@ define([
             //self.logger.info(path, pathMap[path], name);
         };
 
-        self.logger.info(JSON.stringify(children));
-        for(var i in children){
-            self.logger.info(children[i].childPath);
-        }
+        //self.logger.info(childContainment.childName);
+       // self.logger.info('loop',children.childName, chilsdren.childPath);
         //self.logger.info(JSON.stringify(childContainment.childName), JSON.stringify(childContainment.path));
-           // pathMap[childContainment.path] = childContainment.childName;
             return pathMap;
     };
 

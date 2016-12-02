@@ -101,7 +101,7 @@ define(['./_project' ], function (Project) {
     * @public
     */
     Project.FCO.prototype.asMETATYPE = function () {
-        // TODO: Consider adding a check for the base-type here.
+
         return this;
     };
 
@@ -124,6 +124,17 @@ define(['./_project' ], function (Project) {
 
 // TODO: Children.prototype.METATYPE for each valid child type
 
+
+    /**
+    * Gets the children of the FCO instance.
+    * @returns {''} Currently get children.
+    * @public
+    */
+    Project.FCO.prototype.getBambino = function () {
+        
+       
+        return [''];
+    };
 
     return Project.FCO;
 });

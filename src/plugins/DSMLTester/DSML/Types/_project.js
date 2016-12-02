@@ -35,20 +35,7 @@ define([], function () {
     * @constructor
     */
     Project.ROOT = function (node, META) {
-        var name,
-        childrenPaths;
-
-        if(Project._core.getAttribute(node, 'name') !== 'ROOT')
-            throw new ReferenceError("Not the Root Node");
-
-        childrenPaths = Project._core.getOwnChildrenPaths(node);
-        for (var i in childrenPaths) {
-            for ( name in META) {
-                if(Project._core.getPath(META[name]) === childrenPaths[i]) {
-                    childrenPaths[i] = name;
-                }
-            }
-        }
+        var name;
         this.Children = new Project.ROOT.Children(node, META);
     };
 
@@ -60,7 +47,7 @@ define([], function () {
     * @param {object} node - The wrapped CoreNode object of Project.ROOT
     * @constructor
     */
-    Project.ROOT.Children = function (node) {
+    Project.ROOT.Children = function (node, META) {
         this._node = node;
     };
 
@@ -68,16 +55,15 @@ define([], function () {
     // get id
 
 
-
     // get guid
 
     // For each meta-type add
     //JS DOC
     Project.ROOT.Children.prototype.FCO = function () {
-        // TODO: get all children (core) nodes and match with Project.MetaType
-        // Filter out based on dsmlNode instanceof Project.FCO.
-    }
+    // TODO: get all children (core) nodes and match with Project.MetaType
+    // Filter out based on dsmlNode instanceof Project.FCO.
 
+    }
 
 
     return Project;

@@ -107,7 +107,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     * @public
     */
     Project.Component.prototype.asMETATYPE = function () {
-        // TODO: Consider adding a check for the base-type here.
+
         return this;
     };
 
@@ -186,6 +186,17 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 // TODO: Children.prototype.METATYPE for each valid child type
 
+
+    /**
+    * Gets the children of the Component instance.
+    * @returns {''} Currently get children.
+    * @public
+    */
+    Project.Component.prototype.getBambino = function () {
+        
+       
+        return [''];
+    };
 
     return Project.Component;
 });
