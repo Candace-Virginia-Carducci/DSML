@@ -136,11 +136,16 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
        continue;
    }%>
     /**
-    * sets the children name of the <%=bambinoName%> instance.
-    * @returns {string} Currently set name.
+    * Get all children of <%=bambinoName%> type (including derived types).
+    * @returns {Project.<%=bambinoName%>} Currently set name.
     * @public
     */
     Project.<%=name%>.Children.prototype.<%=bambinoName%> = function () {
+        // 1. getChildrenPaths
+        // 2. get the actual nodes using Project._nodes
+        // 3. create DSML-node based on meta-type.
+        // 4. return all DSML-nodes that are "instanceof" bambinoName
+
         var hi = 1;
     return '<%=bambinoName%>';
     };

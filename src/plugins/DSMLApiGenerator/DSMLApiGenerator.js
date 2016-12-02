@@ -220,7 +220,7 @@ define([
 
         // N.B. The second arugment to render is an object. Inside the template code all keys
         // are available as variables in the scope of the template.
-        templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, self.META);
+        templates['DSML/Types/_project.js'] = ejs.render(PROJECT_TEMPLATE, {META: self.META});
         templates['DSML/DSML.js'] = ejs.render(DSML_TEMPLATE, {META: metaNodeInfo});
 
         for (metaName in metaNodeInfo) {

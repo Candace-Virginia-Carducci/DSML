@@ -36,7 +36,7 @@ define([], function () {
     */
     Project.ROOT = function (node, META) {
         var name;
-        this.Children = new Project.ROOT.Children(node, META);
+        this.children = new Project.ROOT.Children(node, META);
     };
 
     /**
@@ -65,7 +65,7 @@ define([], function () {
 
     }
 
-<%for (var metaName in this.META) {%>
+<%for (var metaName in META) {%>
     Project.ROOT.Children.prototype.<%=metaName%> = function () {
         var hi;
     }

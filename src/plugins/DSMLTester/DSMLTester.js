@@ -82,6 +82,9 @@ define([
                 rootObj = DSML.initialize(self.core, nodes, self.META, self.rootNode);
                 dsmlNode = new DSML.System(self.activeNode);
 
+                // var fcoChildren = dsmlNode.children.FCO();
+                // var systemChildren = dsmlNode.children.System();
+
                 //self.logger.info(rootObj.childrenPaths);
 
                 self.logger.info();
