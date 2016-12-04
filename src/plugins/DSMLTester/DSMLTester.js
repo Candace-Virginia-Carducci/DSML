@@ -102,8 +102,8 @@ define([
                 self.logger.info('scalability', dsmlNode.attributes.scalability())
                 self.logger.info('isTop', dsmlNode.attributes.isTop());
                 self.logger.info('isSafe', dsmlNode.attributes.isSafe());
-                //self.logger.info('children', dsmlNode.getBambino());
-
+                self.logger.info('children', dsmlNode.getBambino());
+                self.logger.info('children', dsmlNode.children.System());
 
 
 

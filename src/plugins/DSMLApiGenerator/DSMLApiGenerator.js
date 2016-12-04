@@ -77,7 +77,6 @@ define([
 
         // PM: metaNode is a badly chosen variable name - metaName is better..
         for (var metaName in self.META) {
-
             //prints metaNodes to info logger
             //self.logger.info(metaNode);
             metaMap[metaName] = self.getMetaInfo(self.META[metaName]);
@@ -85,7 +84,7 @@ define([
         }
 
         //print map
-        self.printMap(metaMap);
+        //self.printMap(metaMap);
 
 
         var templates = self.getFiles(metaMap);

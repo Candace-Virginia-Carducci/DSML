@@ -27,6 +27,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         }
         this._node = node;
         this.attributes = new Project.Connection.Attributes(this._node);
+        this.children = new Project.Connection.Children(this._node);
     };
 
     /**
@@ -42,12 +43,28 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         this._node = node;
     };
 
+    /**
+    * Initializes a new instance of Connection.Attributes
+    *
+    * @class
+    * @classdesc This class wraps the attributes of Connection.
+    * @param {object} node - The wrapped CoreNode object of Connection.
+    * @constructor
+    */
+    Project.Connection.Children = function (node) {
+        FCO.Children.call(this,node);
+        this._node = node;
+    };
+
 
     Project.Connection.prototype = Object.create(FCO.prototype);
     Project.Connection.prototype.constructor = Project.Connection;
 
     Project.Connection.Attributes.prototype = Object.create(FCO.Attributes.prototype);
     Project.Connection.Attributes.prototype.constructor = Project.Connection.Attributes;
+
+    Project.Connection.Children.prototype = Object.create(FCO.Children.prototype);
+    Project.Connection.Children.prototype.constructor = Project.Connection.Children;
 
 
     /**
@@ -156,7 +173,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 
 
-// TODO: Children.prototype.METATYPE for each valid child type
+// TODO: Children.prototype.METATYPE for each valid child type !
 
 
     /**

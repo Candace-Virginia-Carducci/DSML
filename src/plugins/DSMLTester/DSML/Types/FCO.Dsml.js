@@ -27,6 +27,7 @@ define(['./_project' ], function (Project) {
         }
         this._node = node;
         this.attributes = new Project.FCO.Attributes(this._node);
+        this.children = new Project.FCO.Children(this._node);
     };
 
     /**
@@ -38,6 +39,19 @@ define(['./_project' ], function (Project) {
      * @constructor
      */
     Project.FCO.Attributes = function (node) {
+        
+        this._node = node;
+    };
+
+    /**
+    * Initializes a new instance of FCO.Attributes
+    *
+    * @class
+    * @classdesc This class wraps the attributes of FCO.
+    * @param {object} node - The wrapped CoreNode object of FCO.
+    * @constructor
+    */
+    Project.FCO.Children = function (node) {
         
         this._node = node;
     };
@@ -122,7 +136,7 @@ define(['./_project' ], function (Project) {
 
 
 
-// TODO: Children.prototype.METATYPE for each valid child type
+// TODO: Children.prototype.METATYPE for each valid child type !
 
 
     /**

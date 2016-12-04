@@ -27,6 +27,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
         }
         this._node = node;
         this.attributes = new Project.<%=name%>.Attributes(this._node);
+        this.children = new Project.<%=name%>.Children(this._node);
     };
 
     /**
@@ -42,12 +43,28 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
         this._node = node;
     };
 
+    /**
+    * Initializes a new instance of <%=name%>.Attributes
+    *
+    * @class
+    * @classdesc This class wraps the attributes of <%=name%>.
+    * @param {object} node - The wrapped CoreNode object of <%=name%>.
+    * @constructor
+    */
+    Project.<%=name%>.Children = function (node) {
+        <%if (base) { %><%=base%>.Children.call(this,node);<%}%>
+        this._node = node;
+    };
+
 <%if (base) { %>
     Project.<%=name%>.prototype = Object.create(<%=base%>.prototype);
     Project.<%=name%>.prototype.constructor = Project.<%=name%>;
 
     Project.<%=name%>.Attributes.prototype = Object.create(<%=base%>.Attributes.prototype);
     Project.<%=name%>.Attributes.prototype.constructor = Project.<%=name%>.Attributes;
+
+    Project.<%=name%>.Children.prototype = Object.create(<%=base%>.Children.prototype);
+    Project.<%=name%>.Children.prototype.constructor = Project.<%=name%>.Children;
 <%}%>
 
     /**
@@ -128,7 +145,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 <%}%>
 
 
-// TODO: Children.prototype.METATYPE for each valid child type
+// TODO: Children.prototype.METATYPE for each valid child type !
 <%for (var c = 0; c < children.length; c += 1) {
     var bambinoName = pathMap[children[c]];
 %>
@@ -142,12 +159,27 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
     */
     Project.<%=name%>.Children.prototype.<%=bambinoName%> = function () {
         // 1. getChildrenPaths
+        var childrenPaths = Project._core.getChildrenPaths(this._node);
         // 2. get the actual nodes using Project._nodes
+        var childNodes = [];
+        for(var x=0; x < childrenPaths.length; x+=1){
+            for (var y=0; y < Project._nodes.length; y+=1){
+                if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
+                    childNodes.push(Project._nodes[y]);
+                }
+            }
+        }
         // 3. create DSML-node based on meta-type.
+        var dsmlNodes = [];
+        for(var d=0; d < childNodes.length; d+=1){
+            if(childNodes[d] instanceof <%=bambinoName%>){
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            }
+        }
+
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        var hi = 1;
-    return '<%=bambinoName%>';
+        return dsmlNodes;
     };
 <%}%>
 

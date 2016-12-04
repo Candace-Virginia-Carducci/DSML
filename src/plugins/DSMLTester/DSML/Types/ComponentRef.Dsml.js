@@ -27,6 +27,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         }
         this._node = node;
         this.attributes = new Project.ComponentRef.Attributes(this._node);
+        this.children = new Project.ComponentRef.Children(this._node);
     };
 
     /**
@@ -42,12 +43,28 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         this._node = node;
     };
 
+    /**
+    * Initializes a new instance of ComponentRef.Attributes
+    *
+    * @class
+    * @classdesc This class wraps the attributes of ComponentRef.
+    * @param {object} node - The wrapped CoreNode object of ComponentRef.
+    * @constructor
+    */
+    Project.ComponentRef.Children = function (node) {
+        FCO.Children.call(this,node);
+        this._node = node;
+    };
+
 
     Project.ComponentRef.prototype = Object.create(FCO.prototype);
     Project.ComponentRef.prototype.constructor = Project.ComponentRef;
 
     Project.ComponentRef.Attributes.prototype = Object.create(FCO.Attributes.prototype);
     Project.ComponentRef.Attributes.prototype.constructor = Project.ComponentRef.Attributes;
+
+    Project.ComponentRef.Children.prototype = Object.create(FCO.Children.prototype);
+    Project.ComponentRef.Children.prototype.constructor = Project.ComponentRef.Children;
 
 
     /**
@@ -156,7 +173,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 
 
-// TODO: Children.prototype.METATYPE for each valid child type
+// TODO: Children.prototype.METATYPE for each valid child type !
 
 
     /**

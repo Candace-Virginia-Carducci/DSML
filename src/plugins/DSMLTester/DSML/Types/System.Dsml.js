@@ -27,6 +27,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         }
         this._node = node;
         this.attributes = new Project.System.Attributes(this._node);
+        this.children = new Project.System.Children(this._node);
     };
 
     /**
@@ -42,12 +43,28 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         this._node = node;
     };
 
+    /**
+    * Initializes a new instance of System.Attributes
+    *
+    * @class
+    * @classdesc This class wraps the attributes of System.
+    * @param {object} node - The wrapped CoreNode object of System.
+    * @constructor
+    */
+    Project.System.Children = function (node) {
+        FCO.Children.call(this,node);
+        this._node = node;
+    };
+
 
     Project.System.prototype = Object.create(FCO.prototype);
     Project.System.prototype.constructor = Project.System;
 
     Project.System.Attributes.prototype = Object.create(FCO.Attributes.prototype);
     Project.System.Attributes.prototype.constructor = Project.System.Attributes;
+
+    Project.System.Children.prototype = Object.create(FCO.Children.prototype);
+    Project.System.Children.prototype.constructor = Project.System.Children;
 
 
     /**
@@ -184,50 +201,130 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
 
 
 
-// TODO: Children.prototype.METATYPE for each valid child type
+// TODO: Children.prototype.METATYPE for each valid child type !
 
     
     /**
-    * sets the children name of the Component instance.
-    * @returns {string} Currently set name.
+    * Get all children of Component type (including derived types).
+    * @returns {Project.Component} Currently set name.
     * @public
     */
     Project.System.Children.prototype.Component = function () {
-        var hi = 1;
-    return 'Component';
+        // 1. getChildrenPaths
+        var childrenPaths = Project._core.getChildrenPaths(this._node);
+        // 2. get the actual nodes using Project._nodes
+        var childNodes = [];
+        for(var x=0; x < childrenPaths.length; x+=1){
+            for (var y=0; y < Project._nodes.length; y+=1){
+                if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
+                    childNodes.push(Project._nodes[y]);
+                }
+            }
+        }
+        // 3. create DSML-node based on meta-type.
+        var dsmlNodes = [];
+        for(var d=0; d < childNodes.length; d+=1){
+            if(childNodes[d] instanceof Component){
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            }
+        }
+
+        // 4. return all DSML-nodes that are "instanceof" bambinoName
+
+        return dsmlNodes;
     };
 
     
     /**
-    * sets the children name of the System instance.
-    * @returns {string} Currently set name.
+    * Get all children of System type (including derived types).
+    * @returns {Project.System} Currently set name.
     * @public
     */
     Project.System.Children.prototype.System = function () {
-        var hi = 1;
-    return 'System';
+        // 1. getChildrenPaths
+        var childrenPaths = Project._core.getChildrenPaths(this._node);
+        // 2. get the actual nodes using Project._nodes
+        var childNodes = [];
+        for(var x=0; x < childrenPaths.length; x+=1){
+            for (var y=0; y < Project._nodes.length; y+=1){
+                if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
+                    childNodes.push(Project._nodes[y]);
+                }
+            }
+        }
+        // 3. create DSML-node based on meta-type.
+        var dsmlNodes = [];
+        for(var d=0; d < childNodes.length; d+=1){
+            if(childNodes[d] instanceof System){
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            }
+        }
+
+        // 4. return all DSML-nodes that are "instanceof" bambinoName
+
+        return dsmlNodes;
     };
 
     
     /**
-    * sets the children name of the Connection instance.
-    * @returns {string} Currently set name.
+    * Get all children of Connection type (including derived types).
+    * @returns {Project.Connection} Currently set name.
     * @public
     */
     Project.System.Children.prototype.Connection = function () {
-        var hi = 1;
-    return 'Connection';
+        // 1. getChildrenPaths
+        var childrenPaths = Project._core.getChildrenPaths(this._node);
+        // 2. get the actual nodes using Project._nodes
+        var childNodes = [];
+        for(var x=0; x < childrenPaths.length; x+=1){
+            for (var y=0; y < Project._nodes.length; y+=1){
+                if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
+                    childNodes.push(Project._nodes[y]);
+                }
+            }
+        }
+        // 3. create DSML-node based on meta-type.
+        var dsmlNodes = [];
+        for(var d=0; d < childNodes.length; d+=1){
+            if(childNodes[d] instanceof Connection){
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            }
+        }
+
+        // 4. return all DSML-nodes that are "instanceof" bambinoName
+
+        return dsmlNodes;
     };
 
     
     /**
-    * sets the children name of the ComponentRef instance.
-    * @returns {string} Currently set name.
+    * Get all children of ComponentRef type (including derived types).
+    * @returns {Project.ComponentRef} Currently set name.
     * @public
     */
     Project.System.Children.prototype.ComponentRef = function () {
-        var hi = 1;
-    return 'ComponentRef';
+        // 1. getChildrenPaths
+        var childrenPaths = Project._core.getChildrenPaths(this._node);
+        // 2. get the actual nodes using Project._nodes
+        var childNodes = [];
+        for(var x=0; x < childrenPaths.length; x+=1){
+            for (var y=0; y < Project._nodes.length; y+=1){
+                if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
+                    childNodes.push(Project._nodes[y]);
+                }
+            }
+        }
+        // 3. create DSML-node based on meta-type.
+        var dsmlNodes = [];
+        for(var d=0; d < childNodes.length; d+=1){
+            if(childNodes[d] instanceof ComponentRef){
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            }
+        }
+
+        // 4. return all DSML-nodes that are "instanceof" bambinoName
+
+        return dsmlNodes;
     };
 
 
