@@ -82,29 +82,14 @@ define([
                 rootObj = DSML.initialize(self.core, nodes, self.META, self.rootNode);
                 dsmlNode = new DSML.System(self.activeNode);
 
-                // var fcoChildren = dsmlNode.children.FCO();
-                // var systemChildren = dsmlNode.children.System();
-
-                //self.logger.info(rootObj.childrenPaths);
-
                 self.logger.info();
                 //self.logger.info('ROOT', self.core.getOwnChildrenPaths(rootObj));
 
                 // self.logger.info('nodeObject', self.core.getAttribute(nodeObject, 'name'));
                 // self.logger.info('activeNode', self.core.getAttribute(self.activeNode, 'name'));
 
-                //System
-                self.logger.info('name: ', dsmlNode.attributes.name());
-                self.logger.info('ID', dsmlNode.getID());
-                self.logger.info('GUID', dsmlNode.getGUID());
-                self.logger.info('Type', self.core.getAttribute(self.core.getBase(self.activeNode), 'name'));
-                self.logger.info('reliability', dsmlNode.attributes.reliability());
-                self.logger.info('scalability', dsmlNode.attributes.scalability())
-                self.logger.info('isTop', dsmlNode.attributes.isTop());
-                self.logger.info('isSafe', dsmlNode.attributes.isSafe());
-                self.logger.info('children', dsmlNode.getBambino());
-                self.logger.info('children', dsmlNode.children.System());
-
+                //SYSTEM TEST
+                self.logger.info();
 
 
 

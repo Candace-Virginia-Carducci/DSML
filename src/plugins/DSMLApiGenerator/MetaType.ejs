@@ -179,7 +179,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return dsmlNodes;
+        return childNodes;
     };
 <%}%>
 
@@ -188,7 +188,7 @@ define(['./_project' <%if( base ){%> ,'./<%=base%>.Dsml' <%}%>], function (Proje
     * @returns {'<%=children%>'} Currently get children.
     * @public
     */
-    Project.<%=name%>.prototype.getBambino = function () {
+    Project.<%=name%>.prototype.getFCOChildren = function () {
         <%var bambini = []; %>
        <%for (var z = 0; z < children.length; z += 1) {
            bambini.push(pathMap[children[z]]);

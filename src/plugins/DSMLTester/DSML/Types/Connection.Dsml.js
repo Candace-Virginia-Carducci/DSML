@@ -181,7 +181,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     * @returns {''} Currently get children.
     * @public
     */
-    Project.Connection.prototype.getBambino = function () {
+    Project.Connection.prototype.getFCOChildren = function () {
         
        
         return [''];

@@ -83,7 +83,7 @@ define([], function () {
     var dsmlNodes = [];
     for(var d=0; d < childNodes.length; d+=1){
         if(childNodes[d] instanceof FCO){
-            dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            dsmlNodes.push(this_.node);
         }
     }
     // 4. return all DSML-nodes that are "instanceof" metaName
@@ -107,7 +107,7 @@ define([], function () {
     var dsmlNodes = [];
     for(var d=0; d < childNodes.length; d+=1){
         if(childNodes[d] instanceof ComponentRef){
-            dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            dsmlNodes.push(this_.node);
         }
     }
     // 4. return all DSML-nodes that are "instanceof" metaName
@@ -131,7 +131,7 @@ define([], function () {
     var dsmlNodes = [];
     for(var d=0; d < childNodes.length; d+=1){
         if(childNodes[d] instanceof Component){
-            dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            dsmlNodes.push(this_.node);
         }
     }
     // 4. return all DSML-nodes that are "instanceof" metaName
@@ -155,7 +155,7 @@ define([], function () {
     var dsmlNodes = [];
     for(var d=0; d < childNodes.length; d+=1){
         if(childNodes[d] instanceof System){
-            dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            dsmlNodes.push(this_.node);
         }
     }
     // 4. return all DSML-nodes that are "instanceof" metaName
@@ -179,7 +179,7 @@ define([], function () {
     var dsmlNodes = [];
     for(var d=0; d < childNodes.length; d+=1){
         if(childNodes[d] instanceof Connection){
-            dsmlNodes.push(new Project[childNodes[d]](this_.node));
+            dsmlNodes.push(this_.node);
         }
     }
     // 4. return all DSML-nodes that are "instanceof" metaName

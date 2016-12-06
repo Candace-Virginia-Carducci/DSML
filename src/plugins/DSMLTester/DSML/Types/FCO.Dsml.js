@@ -144,7 +144,7 @@ define(['./_project' ], function (Project) {
     * @returns {''} Currently get children.
     * @public
     */
-    Project.FCO.prototype.getBambino = function () {
+    Project.FCO.prototype.getFCOChildren = function () {
         
        
         return [''];

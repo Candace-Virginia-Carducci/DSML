@@ -217,7 +217,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(Project._nodes[y]);
+                    childNodes.push(childrensPaths[x]);
                 }
             }
         }
@@ -225,13 +225,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof Component){
-                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+                dsmlNodes.push(this_.nodes);
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return dsmlNodes;
+        return childNodes;
     };
 
     
@@ -248,7 +248,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(Project._nodes[y]);
+                    childNodes.push(childrensPaths[x]);
                 }
             }
         }
@@ -256,13 +256,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof System){
-                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+                dsmlNodes.push(this_.nodes);
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return dsmlNodes;
+        return childNodes;
     };
 
     
@@ -279,7 +279,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(Project._nodes[y]);
+                    childNodes.push(childrensPaths[x]);
                 }
             }
         }
@@ -287,13 +287,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof Connection){
-                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+                dsmlNodes.push(this_.nodes);
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return dsmlNodes;
+        return childNodes;
     };
 
     
@@ -310,7 +310,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(Project._nodes[y]);
+                    childNodes.push(childrensPaths[x]);
                 }
             }
         }
@@ -318,13 +318,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof ComponentRef){
-                dsmlNodes.push(new Project[childNodes[d]](this_.node));
+                dsmlNodes.push(this_.nodes);
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return dsmlNodes;
+        return childNodes;
     };
 
 
@@ -333,7 +333,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     * @returns {'/W,/j,/C,/X'} Currently get children.
     * @public
     */
-    Project.System.prototype.getBambino = function () {
+    Project.System.prototype.getFCOChildren = function () {
         
        
         

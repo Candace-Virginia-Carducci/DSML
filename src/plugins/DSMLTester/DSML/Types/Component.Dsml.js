@@ -209,7 +209,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
     * @returns {''} Currently get children.
     * @public
     */
-    Project.Component.prototype.getBambino = function () {
+    Project.Component.prototype.getFCOChildren = function () {
         
        
         return [''];
