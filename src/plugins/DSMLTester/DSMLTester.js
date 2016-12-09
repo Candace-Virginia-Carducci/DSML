@@ -82,14 +82,20 @@ define([
                 rootObj = DSML.initialize(self.core, nodes, self.META, self.rootNode);
                 dsmlNode = new DSML.System(self.activeNode);
 
-                self.logger.info();
                 //self.logger.info('ROOT', self.core.getOwnChildrenPaths(rootObj));
 
                 // self.logger.info('nodeObject', self.core.getAttribute(nodeObject, 'name'));
                 // self.logger.info('activeNode', self.core.getAttribute(self.activeNode, 'name'));
 
                 //SYSTEM TEST
-                self.logger.info();
+                self.logger.info('name', dsmlNode.attributes.name());
+                self.logger.info('isSafe', dsmlNode.attributes.isSafe());
+                self.logger.info('isTop', dsmlNode.attributes.isTop());
+                self.logger.info('reliability', dsmlNode.attributes.reliability());
+                self.logger.info('scalability', dsmlNode.attributes.scalability());
+                self.logger.info('nodes', dsmlNode.getFCOChildren());
+                self.logger.info(dsmlNode.children.System());
+
 
 
 

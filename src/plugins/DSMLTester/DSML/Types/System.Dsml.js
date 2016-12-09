@@ -217,7 +217,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(childrensPaths[x]);
+                    childNodes.push(Project._nodes[y]);
                 }
             }
         }
@@ -225,13 +225,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof Component){
-                dsmlNodes.push(this_.nodes);
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return childNodes;
+        return dsmlNodes;
     };
 
     
@@ -248,7 +248,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(childrensPaths[x]);
+                    childNodes.push(Project._nodes[y]);
                 }
             }
         }
@@ -256,13 +256,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof System){
-                dsmlNodes.push(this_.nodes);
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return childNodes;
+        return dsmlNodes;
     };
 
     
@@ -279,7 +279,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(childrensPaths[x]);
+                    childNodes.push(Project._nodes[y]);
                 }
             }
         }
@@ -287,13 +287,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof Connection){
-                dsmlNodes.push(this_.nodes);
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return childNodes;
+        return dsmlNodes;
     };
 
     
@@ -310,7 +310,7 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         for(var x=0; x < childrenPaths.length; x+=1){
             for (var y=0; y < Project._nodes.length; y+=1){
                 if(childrensPaths[x] === Project._core.getPath(Project._nodes[y])){
-                    childNodes.push(childrensPaths[x]);
+                    childNodes.push(Project._nodes[y]);
                 }
             }
         }
@@ -318,13 +318,13 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         var dsmlNodes = [];
         for(var d=0; d < childNodes.length; d+=1){
             if(childNodes[d] instanceof ComponentRef){
-                dsmlNodes.push(this_.nodes);
+                dsmlNodes.push(new Project[childNodes[d]](this_.node));
             }
         }
 
         // 4. return all DSML-nodes that are "instanceof" bambinoName
 
-        return childNodes;
+        return dsmlNodes;
     };
 
 
@@ -343,5 +343,8 @@ define(['./_project'  ,'./FCO.Dsml' ], function (Project, FCO) {
         return ['Component,System,Connection,ComponentRef'];
     };
 
+
     return Project.System;
+
+
 });
